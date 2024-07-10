@@ -8,7 +8,11 @@
 body {
   font-family: "Poppins";
   font-weight: 400;
-  font-style: norma;
+  font-style: normal;
+}
+
+.body-gradient{
+  @apply bg-gradient-to-tr from-[#110234] to-[#000000]
 }
 
 @layer base {
@@ -79,9 +83,12 @@ body {
 
 /* active link */
 a.active {
-  background-color: #f0f5f9;
+  color: #f0f5f9;
   padding-inline: 10px;
   padding-block: 10px;
   border-radius: 10px;
 }
 
+.text-gradient{
+  @apply bg-clip-text text-transparent bg-primary-gradient
+}

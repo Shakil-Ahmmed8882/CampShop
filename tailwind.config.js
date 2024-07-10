@@ -18,7 +18,7 @@ export const theme = {
   extend: {
     colors: {
       primaryColor: "#9ADE66",
-      primaryLightShad: "#f5fcf0",
+      primaryLight: "#2c3f1d60",
       border: "hsl(var(--border))",
       input: "hsl(var(--input))",
       ring: "hsl(var(--ring))",
@@ -72,6 +72,9 @@ export const theme = {
       "accordion-down": "accordion-down 0.2s ease-out",
       "accordion-up": "accordion-up 0.2s ease-out",
     },
+    backgroundImage:{
+      'primary-gradient':'linear-gradient(30deg, #86C341, #B5CC19)'
+    }
   },
 };
 // eslint-disable-next-line no-undef

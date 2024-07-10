@@ -1,9 +1,20 @@
+import Banner from "@/components/pages/home/banner/Banner";
+import BestSellingProducts from "@/components/pages/home/best-selled-products/BestSelledProducts";
+import Categories from "@/components/pages/home/categories/Categories";
+import FAQ from "@/components/pages/home/FAQ/FAQ";
+import FeaturedProducts from "@/components/pages/home/featured/Featured";
+import Testimonials from "@/components/pages/home/testimonials/Testimonials";
 
 
 const Home= (): JSX.Element => {
   return (
-    <div className="flex h-screen w-full items-center justify-center">
-        <h1 className="text-3xl font-bold">Home</h1>
+    <div className="">
+        <Banner/>
+        <BestSellingProducts/>
+        <Categories/>
+        <FeaturedProducts/>
+        <Testimonials/>
+        <FAQ/>
     </div>
   );
 };

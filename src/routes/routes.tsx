@@ -6,18 +6,15 @@ import { routeGenerator } from "../utils/routesGenerator";
 import { userPaths } from "./user.routes";
 import Home from "../pages/Home";
 import MainLayout from "@/components/layout/MainLayout";
+import FAQ from "@/components/pages/home/FAQ/FAQ";
+import { generalPaths } from "./generalRoutes";
 // import ProtectedRoute from '../components/layout/ProtectedRoute';
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
-    children: [
-      {
-        index: true,
-        element: <Home />,
-      },
-    ],
+    children: routeGenerator(generalPaths)
   },
   {
     path: "/user",
