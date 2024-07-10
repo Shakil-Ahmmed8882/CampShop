@@ -17,6 +17,8 @@ export const theme = {
   },
   extend: {
     colors: {
+      primaryColor: "#9ADE66",
+      primaryLightShad: "#f5fcf0",
       border: "hsl(var(--border))",
       input: "hsl(var(--input))",
       ring: "hsl(var(--ring))",

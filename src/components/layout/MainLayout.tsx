@@ -1,13 +1,14 @@
 import { Outlet } from "react-router-dom";
+import Navbar from "./Navigation/Navbar";
 
 
 const MainLayout= (): JSX.Element => {
   return (
-    <>
-    <p>Navbar</p>
+    <div className="max-w-7xl w-full  mx-auto">
+    <Navbar/>
     <Outlet/>
-    <p>Footer</p>
-    </>
+    <p className="bg-primaryColor h-52 w-full">Footer</p>
+    </div>
   );
 };
 
