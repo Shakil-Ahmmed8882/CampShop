@@ -20,6 +20,7 @@ const Navbar = (): JSX.Element => {
           <NavLink className={'text-[#F8FAFC] px-5 py-2 rounded-lg'} to="/products">Products</NavLink>
           <NavLink className={'text-[#F8FAFC] px-5 py-2 rounded-lg'} to="/about">About</NavLink>
           <NavLink className={'text-[#F8FAFC] px-5 py-2 rounded-lg'} to="/faq">FAQ</NavLink>
+          <NavLink className={'text-[#F8FAFC] px-5 py-2 rounded-lg'} to="/cart">Cart</NavLink>
           <NavLink className={'text-[#F8FAFC] px-5 py-2 rounded-lg'} to="/user/dashboard">Dashboard</NavLink>
           <Button className="bg-primary-gradient ">Login</Button>
         </NavMenuList>

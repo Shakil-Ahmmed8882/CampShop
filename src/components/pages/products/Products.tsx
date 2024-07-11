@@ -1,25 +1,62 @@
 import Container from "@/components/shared/Container";
 import Card from "@/components/shared/card/Card";
-import { products } from "../home/best-selled-products/BestSelledProducts";
-import Filter from "./filter/Filter";
-import Search from "./search/Search";
-import { Input } from "@/components/ui/input";
 import BlurBall from "@/components/shared/visuals/BlurBall";
 
+import SearchFilterBar from "./search-filter/SearchFilterBar";
+import { useAppSelector } from "@/redux/hooks";
+import {
+  selectClear,
+  selectCategory,
+  selectSearch,
+  selectMinPrice,
+  selectMaxPrice,
+} from "@/redux/features/product/productSlice";
+import { useGetAllProductsQuery } from "@/redux/features/product/productApi";
+import { TProduct } from "./type";
+
 const Products = (): JSX.Element => {
+  const search = useAppSelector(selectSearch);
+  const category = useAppSelector(selectCategory);
+  const minPrice = useAppSelector(selectMinPrice);
+  const maxPrice = useAppSelector(selectMaxPrice);
+  const clear = useAppSelector(selectClear);
+
+  // Construct the query object
+  const query: Record<string, string> = {};
+  if (category) {
+    query.category = category;
+  }
+  if (search) {
+    query.searchTerm = search;
+  }
+  if (minPrice) {
+    query.minPrice = minPrice;
+  }
+  if (maxPrice) {
+    query.maxPrice = maxPrice;
+  }
+  if (clear) {
+    delete query.category;
+    delete query.searchTerm;
+    delete query.minPrice;
+    delete query.maxPrice;
+  }
+
+  console.log({ query });
+  const { data } = useGetAllProductsQuery(query);
+  console.log({ data });
+
   return (
     <Container>
+      <BlurBall className="!h-[800px] bg-[#050900] brightness-200 bg-blend-overlay -right-80  w-[80%] !top-0 " />
       <>
-      <div className="flex items-center justify-end gap-8 px-8">
-        <Filter/>
-        <Search/>
-        <BlurBall className="!h-[800px] bg-[#050900] brightness-200 bg-blend-overlay -right-80  w-[80%] !top-0 "/>
-        <Input type="text" className=" bg-[#0e131b8d] text-2xl p-16 font-poppins rounded-lg absolute w-[96%] mx-auto right-[2%] px-8 " placeholder="Search.." />
-      </div>
-        <h1 className="text-center text-white text-5xl mt-20 mb-11">Products</h1>
+        <SearchFilterBar />
+        <h1 className="text-center text-white text-5xl mt-20 mb-11">
+          Products
+        </h1>
         <main className="grid grid-cols-1 gap-14 p-4 md:grid-cols-2 lg:grid-cols-3 lg:p-6">
-          {[...products, ...products]?.map((product) => (
-            <Card product={product} />
+          {data?.data?.map((product: TProduct) => (
+            <Card key={product._id} product={product} />
           ))}
         </main>
       </>
