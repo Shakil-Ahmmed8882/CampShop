@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const Card = ({ product }: { product: TProduct }): JSX.Element => {
   return (
-    <Link to={'/products/:id'}>
+    <Link to={`/products/${product?._id}`}>
     <div className="bg-[#0e131b] transition-all duration-500 hover:-translate-y-4 flex flex-col p-6 rounded-lg shadow-md">
       <img
         src={product.images[0]}

@@ -48,7 +48,7 @@ const Products = (): JSX.Element => {
 
   return (
     <Container>
-      <BlurBall className="!h-[800px] bg-[#050900] brightness-200 bg-blend-overlay -right-80  w-[80%] !top-0 " />
+      <BlurBall />
       <>
         <SearchFilterBar />
         <h1 className="text-center text-white text-5xl mt-20 mb-11">

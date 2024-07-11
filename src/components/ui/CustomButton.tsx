@@ -1,9 +1,23 @@
 import { ReactNode } from "react";
 import { Button } from "./button";
 
-const CustomButton = ({ children, px='px-14'}: { children: ReactNode,px?:string }): JSX.Element => {
+type TCustomButtonProps = {
+     children: ReactNode;
+      px?: string ;
+      clickHandler?: () => void;
+    
+    };
+
+const CustomButton = ({
+  children,
+  px = "px-14",
+  clickHandler,
+}: TCustomButtonProps): JSX.Element => {
   return (
-    <Button className={`${px} text-primaryColor rounded-full  !bg-[#2c3f1d60] hover:bg-transparent `}>
+    <Button
+    onClick={clickHandler}
+      className={`${px} text-primaryColor rounded-full  !bg-[#2c3f1d60] hover:!bg-[#476b2b60] smooth-transition`}
+    >
       {children}
     </Button>
   );

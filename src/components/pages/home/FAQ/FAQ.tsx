@@ -1,4 +1,5 @@
 import Container from "@/components/shared/Container";
+import BlurBall from "@/components/shared/visuals/BlurBall";
 import {
   Accordion,
   AccordionContent,
@@ -35,7 +36,8 @@ const faqs = [
 
 const FAQ = () => {
   return (
-    <section className="py-12 bg-[#020000]">
+    <section className="py-12 relative ">
+      <BlurBall/>
       <Container>
         <h2 className="text-3xl text-[#ececec] font-bold mb-16 text-center ">
           FAQ

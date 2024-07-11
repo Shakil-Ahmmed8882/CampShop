@@ -18,7 +18,7 @@ export const generalPaths = [
   },
   {
     name: "Products",
-    path: "products/:details",
+    path: "products/:id",
     element: <ProductDetails />,
   },
   {

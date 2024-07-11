@@ -1,27 +1,45 @@
 import product from "@/assets/images/productts/shoe1.png";
-import { Button } from "@/components/ui/button";
+import { ShowToast } from "@/components/shared/toast/SuccessToast";
 import CustomButton from "@/components/ui/CustomButton";
+import CustomSpinner from "@/components/ui/CustomSpinner";
 import Description from "@/components/ui/Description";
 import Title from "@/components/ui/Title";
-
-const campShopProductDetails = {
-  id: "668d06eab0e44d84ba8a1191",
-  name: "92name",
-  description: "A durable and spacious tent suitable for family camping trips.",
-  price: 149.99,
-  category: "Camping Gear",
-  stock: 100,
-  images: [
-    "https://www.pngall.com/wp-content/uploads/5/Hand-Sanitizer.png",
-    "https://www.pngall.com/wp-content/uploads/5/Hand-Sanitizer.png",
-    "https://www.pngall.com/wp-content/uploads/5/Hand-Sanitizer.png",
-    "https://www.pngall.com/wp-content/uploads/5/Hand-Sanitizer.png",
-  ],
-  isDeleted: true,
-  createdAt: "2023-07-01T12:00:00.000Z",
-};
+import { useCreateCartMutation } from "@/redux/features/cart/cartApi";
+import { useGetProductByIdQuery } from "@/redux/features/product/productApi";
+import { useParams } from "react-router-dom";
 
 const ProductDetails = (): JSX.Element => {
+  const { id } = useParams();
+
+  if (!id) throw new Error("....");
+
+  const { data } = useGetProductByIdQuery(id);
+
+  const { name, description, price,  } =
+    data?.data || {};
+
+  const [addToCart, { data: isLoading }] =
+    useCreateCartMutation();
+
+  const userObj = {
+    userId: "668d753fecf871f4e7c5f0b8",
+    productId: id,
+    quantity: 10,
+  };
+
+  const handleAddToCart = async () => {
+    try {
+      const res = await addToCart(userObj).unwrap();
+      
+      if(res.success){
+        ShowToast("Added: Enjoy!", "Product is added to your cart", true);
+      }
+
+    } catch (error) {
+      ShowToast("Failed!", `${error?.data?.message}`);
+    }
+  };
+
   return (
     <>
       <div className="grid my-20 md:grid-cols-2 gap-6 lg:gap-12 items-start max-w-6xl px-4 mx-auto py-6">
@@ -36,23 +54,28 @@ const ProductDetails = (): JSX.Element => {
             />
 
             <div className="hidden md:flex gap-4 items-start">
-              {[1,2,3,4].map(img => <button className="bg-primaryLight pb-5 rounded-lg overflow-hidden transition-colors">
-                <img
-                  src={product}
-                  alt="Preview thumbnail"
-                  width={100}
-                  height={100}
-                  className=" object-cover"
-                />
-                <span className="sr-only">View Image 1</span>
-              </button>)}
+              {[1, 2, 3, 4].map((img) => (
+                <button
+                  key={img}
+                  className="bg-primaryLight pb-5 rounded-lg overflow-hidden transition-colors"
+                >
+                  <img
+                    src={product}
+                    alt="Preview thumbnail"
+                    width={100}
+                    height={100}
+                    className=" object-cover"
+                  />
+                  <span className="sr-only">View Image 1</span>
+                </button>
+              ))}
             </div>
           </div>
         </div>
         <div className="grid gap-4 md:gap-8">
           <div className="grid gap-2">
             <Title>
-              <> Circles T-Shirt</>
+              <> {name}</>
             </Title>
             <Description>
               60% combed ringspun cotton/40% polyester jersey tee.
@@ -61,34 +84,29 @@ const ProductDetails = (): JSX.Element => {
           </div>
           <div className="grid gap-4">
             <div className="grid gap-2">
-              <p className="text-4xl font-bold text-[#d3d3d3] pt-2 pb-8">$99</p>
+              <p className="text-4xl font-bold text-[#d3d3d3] pt-2 pb-8">
+                ${price}
+              </p>
               {/* <CustomButton>Add to cart</CustomButton> */}
-              <CustomButton>Add To Cart</CustomButton>
+              <CustomButton clickHandler={handleAddToCart}>
+                {isLoading?<CustomSpinner/>:'Add to cart'}
+              </CustomButton>
             </div>
-            
+
             <div className="grid gap-2">
               <h2 className="text-xl font-bold">Product Details</h2>
               <Description>
-              <p className="text-[#767874]">
-                  Introducing the Acme Circles T-Shirt, a perfect blend of style
-                  and comfort for the modern individual. This tee is crafted
-                  with a meticulous composition of 60% combed ringspun cotton
-                  and 40% polyester jersey, ensuring a soft and breathable
-                  fabric that feels gentle against the skin.
-                </p>
-                <p className="text-[#767874]">
+                <span className="text-[#767874]">{description}</span>
+                <span className="text-[#767874]">
                   The design of the Acme Circles T-Shirt is as striking as it is
                   comfortable. The shirt features a unique prism-inspired
                   pattern that adds a modern and eye-catching touch to your
                   ensemble.
-                </p>
+                </span>
               </Description>
             </div>
-          
-                <ProductSpecification/>
 
-
-          
+            <ProductSpecification />
           </div>
         </div>
       </div>
@@ -175,10 +193,6 @@ const Ratings = () => {
   );
 };
 
-
-
-
-
 // Product specification
 const ProductSpecification = () => {
   return (
@@ -223,3 +237,6 @@ const ProductSpecification = () => {
     </div>
   );
 };
+
+
+

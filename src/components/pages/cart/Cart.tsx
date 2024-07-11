@@ -1,11 +1,30 @@
 import product from "@/assets/images/productts/shoe1.png";
-import { Button } from "@/components/ui/button";
+import BlurBall from "@/components/shared/visuals/BlurBall";
 import CustomButton from "@/components/ui/CustomButton";
+import CustomSpinner from "@/components/ui/CustomSpinner";
+import {
+  useGetAllCartsQuery,
+  useUpdateCartMutation,
+} from "@/redux/features/cart/cartApi";
+import OrderSummary from "./OrderSummary";
 
-const Cart = (): JSX => {
+const Cart = (): JSX.Element => {
+  const { data, isLoading } = useGetAllCartsQuery("668d753fecf871f4e7c5f0b8");
+
+  if (isLoading) {
+    return <CustomSpinner />;
+  }
+
+  if (!data || !data.data) {
+    return <div>No data available</div>;
+  }
+
+  const { products, totalPrice } = data.data && data.data;
+
   return (
     <>
-      <section className="w-full py-12">
+      <section className="w-full py-12 pb-32">
+        <BlurBall />
         <div className="container grid gap-6 md:gap-8 px-4 md:px-6">
           <div className="flex items-center justify-between pt-14 pb-8">
             <h1 className="text-2xl font-bold tracking-tight title-color">
@@ -15,7 +34,7 @@ const Cart = (): JSX => {
           </div>
           <div className="grid gap-6 md:grid-cols-[1fr_300px]">
             <div className="grid gap-6">
-              {[1, 2, 3].map((cart) => (
+              {products.map((cart) => (
                 <div
                   className="rounded-lg bg-[#0f0f0bc0] text-card-foreground shadow-sm"
                   data-v0-t="card"
@@ -31,51 +50,31 @@ const Cart = (): JSX => {
                     />
                     <div className="flex items-center justify-between gap-1">
                       <h3 className="font-semibold title-color">
-                        Cozy Blanket
+                        {cart?.product}
                       </h3>
 
-                      <UpdateQuantity />
+                      <UpdateQuantity product={cart} />
                     </div>
                     <div className="flex  items-center gap-2">
-                      <span className="font-semibold text-[#c3c3c3]">$29.99</span>
-                      <DeleteIcon/>
+                      <span className="font-semibold text-[#c3c3c3]">
+                        ${cart?.price}
+                      </span>
+                      <DeleteIcon />
                     </div>
                   </div>
                 </div>
               ))}
             </div>
             <div
-              className="rounded-lg !bg-gradient-to-tr from-[#509502ba] to-[#a6bf0233] bg-blend-overlay text-card-foreground shadow-sm"
+              className="rounded-lg !bg-gradient-to-tr sticky top-0 max-h-screen overflow-y-auto from-[#509502ba]  to-[#a6bf0233] bg-blend-overlay text-card-foreground shadow-sm"
               data-v0-t="card"
             >
-              <div className="flex flex-col space-y-1.5 p-6 ">
-                <h3 className="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight">
+              <div className="flex flex-col space-y-1.5 p-6">
+                <h3 className="whitespace-nowrap title-color text-2xl font-semibold leading-none tracking-tight">
                   Order Summary
                 </h3>
               </div>
-              <div className="p-6 grid gap-4">
-                <div className="flex items-center justify-between">
-                  <span>Subtotal</span>
-                  <span>$72.96</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span>Tax (8%)</span>
-                  <span>$5.84</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span>Discount (10%)</span>
-                  <span>-$7.30</span>
-                </div>
-                <div
-                  data-orientation="horizontal"
-                  role="none"
-                  className="shrink-0 bg-border h-[1px] w-full"
-                />
-                <div className="flex items-center justify-between font-semibold">
-                  <span>Total</span>
-                  <span>$71.50</span>
-                </div>
-              </div>
+              <OrderSummary totalPrice={totalPrice} products={products} />
               <div className="flex items-center p-6 md:hidden">
                 <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2" />
               </div>
@@ -89,10 +88,25 @@ const Cart = (): JSX => {
 
 export default Cart;
 
-const UpdateQuantity = () => {
+const UpdateQuantity = ({ product }) => {
+  const cartInfo = {
+    userId: "668d753fecf871f4e7c5f0b8",
+    productId: "668d06eab0e44d84ba8a1193",
+    quantity: 1,
+  };
+
+  const [updateQuantity, { data }] = useUpdateCartMutation(cartInfo);
+
+  const handleUpdateProductQuantity = () => {
+    updateQuantity(cartInfo);
+  };
+
+  console.log(data)
+
   return (
-    <div className="flex items-center gap-5">
-      <CustomButton px="px-3">
+    <div className="flex items-center gap-5 ">
+      {/* Decrease */}
+      <CustomButton clickHandler={handleUpdateProductQuantity} px="px-3">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width={24}
@@ -108,8 +122,10 @@ const UpdateQuantity = () => {
           <path d="M5 12h14" />
         </svg>
       </CustomButton>
-      <span className="title-color">1</span>
-      <CustomButton px="px-3">
+      <span className="title-color">{product?.quantity}</span>
+
+      {/* Increase */}
+      <CustomButton clickHandler={handleUpdateProductQuantity} px="px-3">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width={24}
