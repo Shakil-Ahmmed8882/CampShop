@@ -5,22 +5,6 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  font-family: "Poppins";
-  font-weight: 400;
-  font-style: normal;
-}
-
-.body-gradient{
-  @apply bg-gradient-to-tr from-[#110234] to-[#000000]
-}
-
-.title-color{
-  @apply text-[#ececec]
-}
-.smooth-transition{
-  @apply transition-all duration-500
-}
 
 @layer base {
   :root {
@@ -87,6 +71,31 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+
+
+body {
+  font-family: "Poppins";
+  font-weight: 400;
+  font-style: normal;
+}
+
+.body-gradient{
+  @apply bg-gradient-to-tr from-[#110234] to-[#000000]
+}
+
+.title-color{
+  @apply text-[#ececec]
+}
+
+.gray-description {
+  @apply text-[#9b9b9b]
+}
+
+.smooth-transition{
+  @apply transition-all duration-500
+}
+
 
 /* active link */
 a.active {

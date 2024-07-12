@@ -20,10 +20,10 @@ const Banner = (): JSX.Element => {
 
         {/* content */}
 
-        <div className="absolute top-10 left-0 w-full h-full flex items-center justify-start p-8">
+        <div className="absolute top-10 left-0 w-full h-full flex items-center justify-start p-3 md:p-8">
           <div className="max-w-3xl  ">
             <Title>
-              Outdoors with Camp<span className="text-gradient">Shop</span>.
+              <span className="hidden sm:inline-block">Outdoors with</span> Camp<span className="text-gradient">Shop</span>.
             </Title>
 
             <Description>
@@ -31,7 +31,7 @@ const Banner = (): JSX.Element => {
               Get Quality equipment and accessories to make your outdoor
               experiences unforgettable.Come on in.
             </Description>
-            <CustomButton>ShopNow</CustomButton>
+            <CustomButton className="w-full sm:w-[40%] ">ShopNow</CustomButton>
           </div>
         </div>
       </section>

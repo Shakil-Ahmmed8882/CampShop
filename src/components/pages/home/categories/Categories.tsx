@@ -1,5 +1,7 @@
 import product from "@/assets/images/productts/shoe1.png";
 import Container from "@/components/shared/Container";
+import Description from "@/components/ui/Description";
+import Title from "@/components/ui/Title";
 import Marquee from "react-fast-marquee";
 
 
@@ -26,21 +28,23 @@ const Categories = () => {
   return (
     <Container>
 
-      <div className="container mx-auto px-4 flex justify-center items-center">
+      <div className="mx-auto px-4 md:flex justify-center items-center z-20 relative">
         <article className="flex-1">
-        <h2 className="text-3xl font-bold mb-6  text-[#ececee] ">Product Categories</h2>
-        <p className="text-gray-400"> Reprehenderit cupiditate, laboriosam sit quae libero sint consequatur reiciendis soluta similique eos eligendi repellat id sed ducimus.</p>
+        <Title className="!text-2xl sm:!text-2xl ">Product Categories</Title>
+        <Description className="text-[15px]">
+        Reprehenderit cupiditate, laboriosam sit quae libero sint consequatur reiciendis soluta similique eos eligendi repellat id sed ducimus.
+        </Description>
         </article>
-        <div className="flex gap-6 overflow-x-auto w-full flex-1">
-            <Marquee pauseOnHover>
+        <div className="flex overflow-x-auto w-full flex-1 mt-8 md:mt-auto">
+            <Marquee pauseOnHover >
           {categories.map((category) => (
-            <div key={category.id} className="text-center ml-7 px-6 pb-7 bg-[#030508ac] rounded-lg overflow-hidden flex-none min-w-[300px]">
+            <div key={category.id} className="text-center  pb-7 cursor-pointer overflow-hidden flex-none min-w-[220px] md:min-w-[250px]">
               <img
                 src={category.image}
                 alt={category.name}
-                className="w-32 h-32 object-cover mx-auto mb-4"
+                className=" size-28 lg:size-32 object-cover mx-auto mb-4"
               />
-              <h3 className="text-primaryColor">{category.name}</h3>
+              <h3 className="text-primaryColor text-[11px] md:text-[15px]">{category.name}</h3>
             </div>
           ))}
 

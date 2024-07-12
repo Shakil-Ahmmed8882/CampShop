@@ -21,7 +21,7 @@ const CustomButton = ({
     <Button
     disabled={isDisabled}
     onClick={clickHandler}
-      className={`${px} ${className} text-primaryColor active:scale-50 smooth-transition rounded-full  bg-[#2c3f1d60] hover:!bg-[#476b2b60] smooth-transition`}
+      className={`${px} ${className} text-primaryColor  text-[12px] md:text-[14px] active:scale-50 smooth-transition rounded-full  bg-[#2c3f1d60] hover:!bg-[#476b2b60] smooth-transition`}
     >
       {children}
     </Button>

@@ -8,7 +8,7 @@ interface ContainerProps {
 }
 
 const Container = ({ children, className = "", py = "py-20" }: ContainerProps): JSX.Element => {
-  return <div className={`${className} ${py} max-w-[1900px] w-full mx-auto`}>{children}</div>;
+  return <div className={`${className} ${py} md:px-8 max-w-[1900px] w-full mx-auto`}>{children}</div>;
 };
 
 export default Container;

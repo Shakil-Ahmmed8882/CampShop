@@ -19,6 +19,7 @@ export const theme = {
     colors: {
       primaryColor: "#9ADE66",
       primaryLight: "#2c3f1d60",
+      primaryLightHover: "#476b2b60",
       border: "hsl(var(--border))",
       input: "hsl(var(--input))",
       ring: "hsl(var(--ring))",
