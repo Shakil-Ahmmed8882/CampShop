@@ -9,6 +9,7 @@ const cartApi = baseApi.injectEndpoints({
           method: "GET",
         };
       },
+      providesTags: ["cart"],
     }),
     createCart: builder.mutation({
       query: (newCart) => ({
@@ -16,19 +17,28 @@ const cartApi = baseApi.injectEndpoints({
         method: "POST",
         body: newCart,
       }),
+      invalidatesTags: ["cart"],
     }),
     updateCart: builder.mutation({
-      query: ({...updatedProduct }) => ({
+      query: ({ ...updatedProduct }) => ({
         url: `/carts`,
         method: "PATCH",
         body: updatedProduct,
       }),
+      invalidatesTags: ["cart"],
     }),
     deleteCart: builder.mutation({
-      query: (id: string) => ({
-        url: `/carts/${id}`,
-        method: "DELETE",
-      }),
+      query: ({cartId, productId}:Record<string,unknown>) => {
+
+        console.log(cartId)
+        console.log(productId)
+        return{
+          url: `/carts/${cartId}/${productId}`,
+          method: "DELETE",
+
+        }
+      },
+      invalidatesTags: ["cart"],
     }),
   }),
 });

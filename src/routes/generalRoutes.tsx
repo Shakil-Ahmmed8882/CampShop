@@ -1,5 +1,7 @@
+import ShopMenu from "@/components/layout/Navigation/shop/ShopMenu";
 import About from "@/components/pages/about/About";
 import Cart from "@/components/pages/cart/Cart";
+import Checkout from "@/components/pages/chekcout/Checkout";
 import FAQ from "@/components/pages/home/FAQ/FAQ";
 import ProductDetails from "@/components/pages/products/product-details/ProductDetails";
 import Products from "@/components/pages/products/Products";
@@ -17,14 +19,19 @@ export const generalPaths = [
     element: <Products />,
   },
   {
-    name: "Products",
+   
     path: "products/:id",
     element: <ProductDetails />,
   },
   {
-    name: "Products",
+    name: "Cart",
     path: "cart",
     element: <Cart />,
+  },
+  {
+    name: "Checkout",
+    path: "checkout",
+    element: <Checkout/>,
   },
   {
     name: "FAQ",
@@ -38,3 +45,5 @@ export const generalPaths = [
   },
 
 ];
+
+

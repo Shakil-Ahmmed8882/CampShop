@@ -12,11 +12,14 @@ export const ShowToast = (title: string, description: string,success?:boolean) =
       <>
       { 
       success?
+      <>
       <CheckCircle/>
+      <ToastAction altText=" undo cart" className="bg-[black] text-white">Undo</ToastAction>
+      </>
       :
       <Warning/>
       }
-        <ToastAction altText=" undo cart" className="bg-[black] text-white">Undo</ToastAction>
+        
       </>
     ),
   });

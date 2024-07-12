@@ -15,26 +15,30 @@ const ProductDetails = (): JSX.Element => {
 
   const { data } = useGetProductByIdQuery(id);
 
-  const { name, description, price,  } =
-    data?.data || {};
+  const { name, description, price, stock } = data?.data || {};
 
-  const [addToCart, { data: isLoading }] =
-    useCreateCartMutation();
+  const [addToCart, { data: addedCart, isLoading }] = useCreateCartMutation();
 
-  const userObj = {
+  // console.log(isLoading)
+  // console.log(addedCart)
+  const cartToAdd = {
     userId: "668d753fecf871f4e7c5f0b8",
     productId: id,
-    quantity: 10,
+    quantity: 1,
   };
 
   const handleAddToCart = async () => {
     try {
-      const res = await addToCart(userObj).unwrap();
-      
-      if(res.success){
-        ShowToast("Added: Enjoy!", "Product is added to your cart", true);
+      const res = await addToCart(cartToAdd).unwrap();
+
+      if (res?.data?.isOutOfStock) {
+        return ShowToast("Failed!", `Opps! this product is out of stock`);
       }
 
+      if (res.success) {
+        ShowToast("Added: Enjoy!", "Product is added to your cart", true);
+      }
+      
     } catch (error) {
       ShowToast("Failed!", `${error?.data?.message}`);
     }
@@ -88,8 +92,18 @@ const ProductDetails = (): JSX.Element => {
                 ${price}
               </p>
               {/* <CustomButton>Add to cart</CustomButton> */}
-              <CustomButton clickHandler={handleAddToCart}>
-                {isLoading?<CustomSpinner/>:'Add to cart'}
+              <CustomButton
+                isDisabled={stock <= 0}
+                clickHandler={handleAddToCart}
+              >
+                {/* loading > if in stock > add to cart  */}
+                {isLoading ? (
+                  <CustomSpinner />
+                ) : stock > 0 ? (
+                  "Add to cart"
+                ) : (
+                  "Out of stock"
+                )}
               </CustomButton>
             </div>
 
@@ -237,6 +251,3 @@ const ProductSpecification = () => {
     </div>
   );
 };
-
-
-

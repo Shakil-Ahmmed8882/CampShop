@@ -3,10 +3,15 @@ import BlurBall from "@/components/shared/visuals/BlurBall";
 import CustomButton from "@/components/ui/CustomButton";
 import CustomSpinner from "@/components/ui/CustomSpinner";
 import {
+  useDeleteCartMutation,
   useGetAllCartsQuery,
   useUpdateCartMutation,
 } from "@/redux/features/cart/cartApi";
 import OrderSummary from "./OrderSummary";
+import ConfirmDialog from "@/components/shared/dialog/ConfirmDialog";
+
+import { Badge } from "@/components/ui/badge";
+import { ShowToast } from "@/components/shared/toast/SuccessToast";
 
 const Cart = (): JSX.Element => {
   const { data, isLoading } = useGetAllCartsQuery("668d753fecf871f4e7c5f0b8");
@@ -30,13 +35,13 @@ const Cart = (): JSX.Element => {
             <h1 className="text-2xl font-bold tracking-tight title-color">
               Shopping Cart
             </h1>
-            <CustomButton>Place Order</CustomButton>
           </div>
           <div className="grid gap-6 md:grid-cols-[1fr_300px]">
             <div className="grid gap-6">
               {products.map((cart) => (
                 <div
-                  className="rounded-lg bg-[#0f0f0bc0] text-card-foreground shadow-sm"
+                  key={cart?._id}
+                  className="rounded-lg  lg:h-40 bg-[#0f0f0bc0] text-card-foreground shadow-sm"
                   data-v0-t="card"
                 >
                   <div className="grid md:grid-cols-[120px_1fr_auto] gap-14 items-center">
@@ -52,14 +57,28 @@ const Cart = (): JSX.Element => {
                       <h3 className="font-semibold title-color">
                         {cart?.product}
                       </h3>
+                      <Badge className="!bg-primaryLight !text-primaryColor">
+                        stock : {" "}
+                        <span className="title-color"> {cart?.stock}</span>
+                      </Badge>
 
                       <UpdateQuantity product={cart} />
                     </div>
-                    <div className="flex  items-center gap-2">
-                      <span className="font-semibold text-[#c3c3c3]">
+                    <div className=" mt-10">
+                      <CustomButton isDisabled={(cart?.quantity <= 0)}>Place Order</CustomButton>
+                      <div className="flex items-center mt-2 justify-center gap-3">
+                      <p className="font-semibold text-[#c3c3c3]">
                         ${cart?.price}
-                      </span>
-                      <DeleteIcon />
+                      </p>
+
+                      <DeleteIcon
+                        cart={{
+                          cartId: cart?.cartId,
+                          productId: cart?.productId,
+                        }}
+                      />
+
+                        </div>
                     </div>
                   </div>
                 </div>
@@ -89,24 +108,32 @@ const Cart = (): JSX.Element => {
 export default Cart;
 
 const UpdateQuantity = ({ product }) => {
-  const cartInfo = {
-    userId: "668d753fecf871f4e7c5f0b8",
-    productId: "668d06eab0e44d84ba8a1193",
-    quantity: 1,
+  const [updateQuantity, { data }] = useUpdateCartMutation();
+
+  const handleUpdateProductQuantity = async(isIncrease: boolean) => {
+    const updateProduct = {
+      userId: "668d753fecf871f4e7c5f0b8",
+      productId: product?.productId,
+      isIncrease,
+    };
+
+    await updateQuantity(updateProduct);
+
+    if(data?.data?.isOutOfStock){
+       return ShowToast("Failed!", `Opps! this product is out of stock`);
+    }
+
+
   };
-
-  const [updateQuantity, { data }] = useUpdateCartMutation(cartInfo);
-
-  const handleUpdateProductQuantity = () => {
-    updateQuantity(cartInfo);
-  };
-
-  console.log(data)
 
   return (
-    <div className="flex items-center gap-5 ">
+    <div className="flex items-center gap-5">
       {/* Decrease */}
-      <CustomButton clickHandler={handleUpdateProductQuantity} px="px-3">
+      <CustomButton
+        isDisabled={product.stock > 0}
+        clickHandler={() => handleUpdateProductQuantity(false)}
+        px="px-3"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width={24}
@@ -117,7 +144,7 @@ const UpdateQuantity = ({ product }) => {
           strokeWidth={2}
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="h-4 w-4 "
+          className="h-4 w-4"
         >
           <path d="M5 12h14" />
         </svg>
@@ -125,7 +152,11 @@ const UpdateQuantity = ({ product }) => {
       <span className="title-color">{product?.quantity}</span>
 
       {/* Increase */}
-      <CustomButton clickHandler={handleUpdateProductQuantity} px="px-3">
+      <CustomButton
+        isDisabled={product.stock <= 0}
+        clickHandler={() => handleUpdateProductQuantity(true)}
+        px="px-3"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width={24}
@@ -146,25 +177,15 @@ const UpdateQuantity = ({ product }) => {
   );
 };
 
-const DeleteIcon = () => {
-  return (
-    <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 w-10">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width={24}
-        height={24}
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth={2}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="size-8 text-[red] font-bold smooth-transition hover:bg-[#490a0aec] p-2 bg-[#490a0a9d]  rounded-full"
-      >
-        <path d="M3 6h18" />
-        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
-        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
-      </svg>
-    </button>
-  );
+const DeleteIcon = ({ cart }) => {
+  const [deleteCart, { data }] = useDeleteCartMutation();
+  const { cartId, productId } = cart;
+
+  const handleDelete = (isConfirm: boolean) => {
+    if (isConfirm) {
+      deleteCart({ cartId, productId });
+    }
+  };
+
+  return <ConfirmDialog handleDelete={handleDelete} />;
 };
