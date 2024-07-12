@@ -31,7 +31,7 @@ const OrderSummary = ({ products, totalPrice }): JSX.Element => {
               </tbody>
             </table>
           </div>
-          <p className="flex justify-end title-color p-3">Total:<span className=""> ${totalPrice}</span></p>
+          <p className="flex mt-3 justify-end text-white p-3">Total:<span className="ml-3 title-color !font-normal"> ${totalPrice}</span></p>
         </div>
       </div>
     </>

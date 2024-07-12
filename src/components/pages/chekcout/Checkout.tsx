@@ -1,4 +1,11 @@
+import { useAppDispatch } from "@/redux/hooks";
+
 const Checkout = (): JSX.Element => {
+
+  const dispatch = useAppDispatch()
+
+
+
   return (
 
       <div className="container mx-auto px-4 py-8 md:py-12 lg:py-16">
@@ -86,6 +93,7 @@ const Checkout = (): JSX.Element => {
                   </div>
                 </div>
               </div>
+              
               <button
                 className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 w-full"
                 type="submit"

@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import product from "@/assets/images/productts/shoe1.png";
 import BlurBall from "@/components/shared/visuals/BlurBall";
 import CustomButton from "@/components/ui/CustomButton";
@@ -12,9 +13,25 @@ import ConfirmDialog from "@/components/shared/dialog/ConfirmDialog";
 
 import { Badge } from "@/components/ui/badge";
 import { ShowToast } from "@/components/shared/toast/SuccessToast";
+import Form from "@/components/shared/form/Form";
+import { useAppDispatch } from "@/redux/hooks";
+import { setFormData } from "@/redux/features/checkout/checkoutSlice";
+import { useNavigate } from "react-router-dom";
 
 const Cart = (): JSX.Element => {
-  const { data, isLoading } = useGetAllCartsQuery("668d753fecf871f4e7c5f0b8");
+  const dispatch = useAppDispatch();
+  const { data, isLoading, refetch } = useGetAllCartsQuery("668d753fecf871f4e7c5f0b8");
+  const goTo = useNavigate();
+
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
+
+  useEffect(() => {
+    if (data && data.data) {
+      dispatch(setFormData(data.data.totalPrice));
+    }
+  }, [data, dispatch]);
 
   if (isLoading) {
     return <CustomSpinner />;
@@ -24,7 +41,11 @@ const Cart = (): JSX.Element => {
     return <div>No data available</div>;
   }
 
-  const { products, totalPrice } = data.data && data.data;
+  const { products: carts, totalPrice } = data.data;
+
+  const handleNavigation = () => {
+    goTo('/success');
+  };
 
   return (
     <>
@@ -38,16 +59,16 @@ const Cart = (): JSX.Element => {
           </div>
           <div className="grid gap-6 md:grid-cols-[1fr_300px]">
             <div className="grid gap-6">
-              {products.map((cart) => (
+              {carts.map((cart) => (
                 <div
-                  key={cart?._id}
+                  key={cart?.productId}
                   className="rounded-lg  lg:h-40 bg-[#0f0f0bc0] text-card-foreground shadow-sm"
                   data-v0-t="card"
                 >
                   <div className="grid md:grid-cols-[120px_1fr_auto] gap-14 items-center">
                     <img
                       src={product}
-                      alt="Cozy Blanket"
+                      alt="Product Image"
                       width={120}
                       height={120}
                       className="rounded-lg object-cover"
@@ -57,28 +78,24 @@ const Cart = (): JSX.Element => {
                       <h3 className="font-semibold title-color">
                         {cart?.product}
                       </h3>
+
                       <Badge className="!bg-primaryLight !text-primaryColor">
                         stock : {" "}
                         <span className="title-color"> {cart?.stock}</span>
                       </Badge>
 
-                      <UpdateQuantity product={cart} />
+                      <UpdateQuantity cart={cart} refetch={refetch} />
                     </div>
                     <div className=" mt-10">
-                      <CustomButton isDisabled={(cart?.quantity <= 0)}>Place Order</CustomButton>
+                      <Form
+                      totalPrice={totalPrice}
+                      handleNavigation={handleNavigation} isDisabled={cart?.quantity <= 0} />
                       <div className="flex items-center mt-2 justify-center gap-3">
-                      <p className="font-semibold text-[#c3c3c3]">
-                        ${cart?.price}
-                      </p>
-
-                      <DeleteIcon
-                        cart={{
-                          cartId: cart?.cartId,
-                          productId: cart?.productId,
-                        }}
-                      />
-
-                        </div>
+                        <p className="font-semibold text-[#c3c3c3]">
+                          ${cart?.price}
+                        </p>
+                        <DeleteIcon cart={cart} refetch={refetch} />
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -93,9 +110,9 @@ const Cart = (): JSX.Element => {
                   Order Summary
                 </h3>
               </div>
-              <OrderSummary totalPrice={totalPrice} products={products} />
+              <OrderSummary totalPrice={totalPrice} products={carts} />
               <div className="flex items-center p-6 md:hidden">
-                <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2" />
+                <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary h-10 px-4 py-2" />
               </div>
             </div>
           </div>
@@ -107,31 +124,41 @@ const Cart = (): JSX.Element => {
 
 export default Cart;
 
-const UpdateQuantity = ({ product }) => {
-  const [updateQuantity, { data }] = useUpdateCartMutation();
+const UpdateQuantity = ({ cart, refetch }) => {
+  const [updateQuantity, { data: updateData, isSuccess, isError }] = useUpdateCartMutation();
 
-  const handleUpdateProductQuantity = async(isIncrease: boolean) => {
+  const handleUpdateProductQuantity = async (isIncrease, productId) => {
     const updateProduct = {
       userId: "668d753fecf871f4e7c5f0b8",
-      productId: product?.productId,
+      productId,
       isIncrease,
     };
 
     await updateQuantity(updateProduct);
 
-    if(data?.data?.isOutOfStock){
-       return ShowToast("Failed!", `Opps! this product is out of stock`);
+    if (isError) {
+      ShowToast("Failed!", `Oops! There was an error updating the product quantity.`);
+      return;
     }
 
+    if (updateData?.data?.isOutOfStock) {
+      ShowToast("Failed!", `Oops! This product is out of stock.`);
+      return;
+    }
 
+    if (isSuccess) {
+      ShowToast("Success!", `Product quantity updated successfully.`);
+      refetch();
+    }
   };
 
   return (
     <div className="flex items-center gap-5">
-      {/* Decrease */}
+
+      {/* decrease */}
       <CustomButton
-        isDisabled={product.stock > 0}
-        clickHandler={() => handleUpdateProductQuantity(false)}
+        isDisabled={cart.quantity <= 0}
+        clickHandler={() => handleUpdateProductQuantity(false, cart.productId)}
         px="px-3"
       >
         <svg
@@ -149,12 +176,12 @@ const UpdateQuantity = ({ product }) => {
           <path d="M5 12h14" />
         </svg>
       </CustomButton>
-      <span className="title-color">{product?.quantity}</span>
+      <span className="title-color">{cart?.quantity}</span>
 
-      {/* Increase */}
+    {/* Increase */}
       <CustomButton
-        isDisabled={product.stock <= 0}
-        clickHandler={() => handleUpdateProductQuantity(true)}
+        isDisabled={cart.stock == 0}
+        clickHandler={() => handleUpdateProductQuantity(true, cart.productId)}
         px="px-3"
       >
         <svg
@@ -177,13 +204,14 @@ const UpdateQuantity = ({ product }) => {
   );
 };
 
-const DeleteIcon = ({ cart }) => {
-  const [deleteCart, { data }] = useDeleteCartMutation();
+const DeleteIcon = ({ cart, refetch }) => {
+  const [deleteCart] = useDeleteCartMutation();
   const { cartId, productId } = cart;
 
   const handleDelete = (isConfirm: boolean) => {
     if (isConfirm) {
       deleteCart({ cartId, productId });
+      refetch();
     }
   };
 
