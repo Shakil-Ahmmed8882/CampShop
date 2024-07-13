@@ -10,7 +10,7 @@ import ShopMenu from "./shop/ShopMenu";
 const Navbar = (): JSX.Element => {
   return (
     <Container py="py-auto">
-    <div className="flex justify-between relative  items-center p-4 z-50">
+    <div className="flex justify-between relative items-center p-4 z-50">
       <Logo />
       <NavigationMenu>
 

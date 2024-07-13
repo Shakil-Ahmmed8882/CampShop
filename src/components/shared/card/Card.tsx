@@ -2,35 +2,52 @@ import { TProduct } from "@/components/pages/products/type";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
+import productImg from "@/assets/images/productts/t-shirt.png";
+import { Ratings } from "@/components/pages/products/product-details/ProductDetails";
+import { CartIcon } from "@/assets/icons/Icons";
+
 const Card = ({ product }: { product: TProduct }): JSX.Element => {
   return (
-    <Link to={`/products/${product?._id}`}>
-    <div className="bg-[#0e131b] transition-all duration-500 hover:-translate-y-4 flex flex-col p-6 rounded-lg shadow-md">
+    <div className="bg-[#0e131b] transition-all duration-500 hover:-translate-y-4 flex flex-col  rounded-lg shadow-md">
+      <div className="pt-6">
       <img
-        src={product.images[0]}
+        src={productImg}
         alt={product.name}
-        className="w-72 h-48 mx-auto p-3 rounded-md object-top -mt-10 mb-14"
+        className="mx-auto size-28  sm:size-40 mb-2 rounded-md object-top "
       />
-      <h3 className="text-xl text-[#ececec] font-semibold mb-2">
-        {product.name}
-      </h3>
-      <p className="text-[#c3c3c3] mb-5 mt-3">{product.price}</p>
-      <p className="text-[#c3c3c3] mb-5 mt-3">{product.category}</p>
+
+      </div>
+
+    <article className="p-3">
+      <div className="flex items-center justify-between pt-8">
+        <h3 className=" sm:text-xl text-[#ececec] font-semibold mb-2">
+          {product.name}
+        </h3>
+        <CartIcon />
+      </div>
+      <div className="py-4 sm:py-3">
+        <Ratings />
+      </div>
+      <div className="flex items-center text-[14px] sm:text-[16px] justify-between">
+        <p className="text-[#c3c3c3] mb-5 mt-3">{product.price}</p>
+        <p className="text-[#c3c3c3] mb-5 mt-3">{product.category}</p>
+      </div>
 
       <div className="flex py-3">
-        <div className="flex w-full justify-between mt-4">
-          <Button className="text-[#c4c4c4] hover:text-white bg-transparent hover:bg-transparent">
+        <div className="flex flex-col sm:flex-row w-full justify-between mt-4">
+          <Button className="text-[#c4c4c4] !text-[12px] sm:text-[16px] hover:text-white bg-[#2c362f42] hover:bg-transparent">
             Learn More
           </Button>
-
-          <Button className="!bg-primaryLight hover:!bg-[#233b0f83] text-primaryColor">
-            Buy now
-          </Button>
+          <Link to={`/products/${product?._id}`}>
+            <Button className="!bg-primaryLight hover:!bg-[#233b0f83] !text-[12px] sm:text-[16px] mt-3 sm:mt-auto w-full sm:w-auto text-primaryColor">
+              View details
+            </Button>
+          </Link>
         </div>
       </div>
+
+    </article>
     </div>
-    
-    </Link>
   );
 };
 

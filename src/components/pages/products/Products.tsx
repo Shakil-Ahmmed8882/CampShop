@@ -13,6 +13,11 @@ import {
 } from "@/redux/features/product/productSlice";
 import { useGetAllProductsQuery } from "@/redux/features/product/productApi";
 import { TProduct } from "./type";
+import Title from "@/components/ui/Title";
+import Description from "@/components/ui/Description";
+
+
+
 
 const Products = (): JSX.Element => {
   const search = useAppSelector(selectSearch);
@@ -47,14 +52,13 @@ const Products = (): JSX.Element => {
   console.log({ data });
 
   return (
-    <Container>
+    <Container px='dfkjdl'>
       <BlurBall />
       <>
         <SearchFilterBar />
-        <h1 className="text-center text-white text-5xl mt-20 mb-11">
-          Products
-        </h1>
-        <main className="grid grid-cols-1 gap-14 p-4 md:grid-cols-2 lg:grid-cols-3 lg:p-6">
+      <Title className="text-center mt-20 md:mt-14">Products</Title>
+      <Description className="text-center pb-2">Get your choice</Description>
+        <main className="grid grid-cols-1 gap-11  sm:grid-cols-2 lg:grid-cols-3 lg:p-6">
           {data?.data?.map((product: TProduct) => (
             <Card key={product._id} product={product} />
           ))}

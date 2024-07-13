@@ -1,7 +1,17 @@
-const Search = (): JSX.Element => {
-  return <>
-    <SearchIcon/>
-  </>
+const Search = ({
+  search,
+  handleSearch,
+}: {
+  search: boolean;
+  handleSearch: (param1: boolean) => void;
+}): JSX.Element => {
+  return (
+    <>
+      <button className="z-30" onClick={() => handleSearch(!search)}>
+        <SearchIcon />
+      </button>
+    </>
+  );
 };
 
 export default Search;
@@ -14,7 +24,7 @@ const SearchIcon = () => {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="size-7 text-[gray] cursor-pointer smooth-transition !duration-300 hover:text-white z-20"
+      className="size-5 md:size-7 text-[gray] cursor-pointer smooth-transition !duration-300 hover:text-white "
     >
       <path
         strokeLinecap="round"

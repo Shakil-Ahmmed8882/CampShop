@@ -130,7 +130,7 @@ const ProductDetails = (): JSX.Element => {
 
 export default ProductDetails;
 
-const Ratings = () => {
+export const Ratings = () => {
   return (
     <div className="flex items-center gap-0.5">
       <svg

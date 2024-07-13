@@ -4,11 +4,11 @@ interface ContainerProps {
   children: ReactNode;
   className?: string;
   py?: string;
-  px?: string;
+  px?: boolean;
 }
 
-const Container = ({ children, className = "", py = "py-20" }: ContainerProps): JSX.Element => {
-  return <div className={`${className} ${py} md:px-8 max-w-[1900px] w-full mx-auto`}>{children}</div>;
+const Container = ({ children, className = "",px = true, py = "py-20" }: ContainerProps): JSX.Element => {
+  return <div className={`${className} ${py} ${px&&'px-3'} max-w-[1900px] w-full mx-auto`}>{children}</div>;
 };
 
 export default Container;

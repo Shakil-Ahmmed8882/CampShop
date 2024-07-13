@@ -1,5 +1,5 @@
 // src/utils/toastUtils.ts
-import { CheckCircle, Warning } from "@/assets/icons/CheckCircle";
+import { CheckCircle, Warning } from "@/assets/icons/Icons";
 import { ToastAction } from "@/components/ui/toast";
 import { toast } from "@/components/ui/use-toast";
 

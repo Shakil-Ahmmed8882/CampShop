@@ -77,7 +77,7 @@ const PriceIcon = () => {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="size-7 text-[gray] smooth-transition !duration-300 hover:text-white z-20"
+      className="size-5 md:size-7 text-[gray] smooth-transition !duration-300 hover:text-white z-20"
     >
       <path
         strokeLinecap="round"

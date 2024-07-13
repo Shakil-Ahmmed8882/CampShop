@@ -7,7 +7,7 @@ import Description from "@/components/ui/Description";
 
 const Banner = (): JSX.Element => {
   return (
-    <Container py={"py-0"}>
+    <Container py={"py-0"} px={false}>
       <section className="relative w-full h-[90vh] -mt-20 overflow-hidden">
         <img
           className="h-full w-full object-bottom object-cover bg-blend-screen"
