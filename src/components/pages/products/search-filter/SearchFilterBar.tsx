@@ -12,7 +12,7 @@ const SearchFilterBar = (): JSX.Element => {
   const [isSearch, setIsSearch] = useState(false)
 
   return (
-    <div className="flex items-center justify-end pr-12">
+    <div className="flex items-center justify-end sm:pr-12">
       <div className={`${isSearch?'opacity-0 translate-x-10':'opacity-100 translate-x-0'} flex items-center justify-end gap-8 px-8 smooth-transition`}>
       <Sort/>
       <FilterByPrice />

@@ -1,3 +1,4 @@
+import { CartIcon } from "@/assets/icons/Icons";
 import ShopMenu from "@/components/layout/Navigation/shop/ShopMenu";
 import About from "@/components/pages/about/About";
 import Cart from "@/components/pages/cart/Cart";
@@ -5,13 +6,14 @@ import Checkout from "@/components/pages/chekcout/Checkout";
 import FAQ from "@/components/pages/home/FAQ/FAQ";
 import ProductDetails from "@/components/pages/products/product-details/ProductDetails";
 import Products from "@/components/pages/products/Products";
+import { NavigationMenu } from "@/components/ui/navigation-menu";
 import Home from "@/pages/Home";
 import SuccessDelevary from "@/pages/SuccessDelevary";
 
 export const generalPaths = [
   {
     name: "Home",
-    path: "/",
+    path: "/shop",
     element: <Home />,
   },
   {
@@ -20,14 +22,9 @@ export const generalPaths = [
     element: <Products />,
   },
   {
-    name: "Cart",
+    name: <CartIcon/>,
     path: "cart",
     element: <Cart />,
-  },
-  {
-    name: "Checkout",
-    path: "checkout",
-    element: <Checkout/>,
   },
   {
     name: "FAQ",

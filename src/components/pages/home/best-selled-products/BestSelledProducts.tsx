@@ -14,7 +14,7 @@ const BestSellingProducts = () => {
 
   return (
     <Container py={"py-0"}>
-      <section className=" py-20 h-screen relative bg-[#0000008e] z-20">
+      <section className=" py-20 min-h-screen relative bg-[#0000008e] z-20">
         <BlurBall />
         <div className="mx-auto px-4">
           <Title className="!text-2xl sm:!text-3xl lg:!text-center">Best Selling Products</Title>

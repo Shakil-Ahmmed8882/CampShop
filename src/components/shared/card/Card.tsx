@@ -18,7 +18,7 @@ const Card = ({ product }: { product: TProduct }): JSX.Element => {
 
       </div>
 
-    <article className="p-3">
+    <article className="p-3 sm:p-4">
       <div className="flex items-center justify-between pt-8">
         <h3 className=" sm:text-xl text-[#ececec] font-semibold mb-2">
           {product.name}
@@ -34,7 +34,7 @@ const Card = ({ product }: { product: TProduct }): JSX.Element => {
       </div>
 
       <div className="flex py-3">
-        <div className="flex flex-col sm:flex-row w-full justify-between mt-4">
+        <div className=" flex  items-center w-full justify-between mt-4">
           <Button className="text-[#c4c4c4] !text-[12px] sm:text-[16px] hover:text-white bg-[#2c362f42] hover:bg-transparent">
             Learn More
           </Button>
