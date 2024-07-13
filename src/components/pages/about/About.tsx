@@ -20,7 +20,7 @@ const About = (): JSX.Element => {
           <div className="absolute inset-0 flex items-center justify-center mt-16">
             <div className="text-center">
               <Title>
-                About<span className="text-gradient"> Us</span>.
+                About<span className="text-gradient"> Us</span>
               </Title>
               <Description className="px-3">
                 Learn more about us. Our mission, team & future goals.
@@ -33,7 +33,7 @@ const About = (): JSX.Element => {
             <div className=" grid gap-8 lg:grid-cols-2 px-3">
               <div>
                 <h2 className="text-3xl title-color pb-4">Our Mission</h2>
-                <p className="mt-4 text-gradient">At our company, we</p>
+                <p className="mt-4 text-primaryColor">At our company, we</p>
                 <Description className="!text-[20px] !leading-relaxed gray-description">
                   Our core values of integrity, excellence, and customer
                   satisfaction guide everything we do. We are committed to

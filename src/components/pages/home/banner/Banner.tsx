@@ -8,9 +8,9 @@ import Description from "@/components/ui/Description";
 const Banner = (): JSX.Element => {
   return (
     <Container py={"py-0"} px={false}>
-      <section className="relative w-full h-[90vh] -mt-20 overflow-hidden">
+      <section className="relative w-full h-[80vh] sm:h-[90vh] -mt-20 overflow-hidden">
         <img
-          className="h-full w-full object-bottom object-cover bg-blend-screen"
+          className="h-full w-full absolute left-0 ri object-bottom object-cover bg-blend-screen"
           src={bannerImage}
           alt="CMapShop Outdoors"
         />

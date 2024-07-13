@@ -32,17 +32,17 @@ const featuredProducts = [
 const FeaturedProducts = () => {
   return (
     <section className="py-12 bg-[black] z-20">
-      <Container>
-        <div className=" ">
+      <Container >
+        <div className="">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16 grid-rows-2">
             {featuredProducts.map((product) => (
               <div className={`${product?.className}`}>
                 {product.heading && (
                   <>
-                    <Title className="!text-2xl sm:!text-2xl ">
+                    <Title className="!text-2xl sm:!text-2xl px-3 ">
                       Featured Products
                     </Title>
-                    <Description className="text-[15px]">
+                    <Description className=" pb-8 px-3">
                       Get our exclusive collecitons
                     </Description>
                   </>
