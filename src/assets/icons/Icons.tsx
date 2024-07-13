@@ -56,24 +56,70 @@ export const CartIcon = () => {
   );
 };
 
-export const NavIcon = ({clickHandler}:{clickHandler:()=> void}) => {
+export const NavIcon = ({ clickHandler }: { clickHandler: () => void }) => {
   return (
     <button onClick={clickHandler}>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        strokeWidth={1.5}
+        stroke="currentColor"
+        className="size-6 text-white"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M3.75 9h16.5m-16.5 6.75h16.5"
+        />
+      </svg>
+    </button>
+  );
+};
+
+// Edit icon
+export const EditIcon = () => {
+  return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="size-6 text-white"
+      className="size-4 text-white"
     >
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
-        d="M3.75 9h16.5m-16.5 6.75h16.5"
+        d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"
       />
     </svg>
+  );
+};
 
+// Delete icons
+export const DeleteIcon = ({handleDelete}:{handleDelete?: () => void}) => {
+  return (
+    <button
+      onClick={handleDelete}
+      className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 w-10"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width={24}
+        height={24}
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth={2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="size-8 text-[red] font-bold smooth-transition hover:bg-[#490a0aec] p-2 bg-[#490a0a9d]  rounded-full"
+      >
+        <path d="M3 6h18" />
+        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+      </svg>
     </button>
   );
 };

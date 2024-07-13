@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { TProduct } from "@/components/pages/products/type";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
