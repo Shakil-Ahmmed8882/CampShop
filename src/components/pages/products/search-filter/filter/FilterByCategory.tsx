@@ -8,7 +8,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
-  clearFilters,
   setCategory,
 } from "@/redux/features/product/productSlice";
 import { useAppDispatch } from "@/redux/hooks";
@@ -20,30 +19,39 @@ const FilterByCategory = (): JSX.Element => {
 
   useEffect(() => {
     dispatch(setCategory({ category: filterValue }));
-  }, [filterValue]);
+  }, [filterValue, dispatch]);
 
+  const categories = [
+    "Tents and Shelters",
+    "Sleeping Bags and Pads",
+    "Backpacks and Bags",
+    "Camping Furniture",
+    "Cooking Gear",
 
-  
+    // "Lighting and Lanterns",
+    // "Navigation and Safety",
+    // "Clothing and Footwear",
+    // "Water Filtration and Hydration",
+    // "Accessories and Tools",
+  ];
+
   return (
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button className="hover:bg-transparent bg-transparent  z-20">
+          <Button className="hover:bg-transparent bg-transparent z-20">
             <FilterIcon />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-56 py-5">
-          <DropdownMenuLabel className="mb-4 ">
-            Filter category{" "}
-          </DropdownMenuLabel>
+        <DropdownMenuContent className="w-56 py-5 h-[60vh] overflow-y-auto">
+          <DropdownMenuLabel className="mb-4">Filter category</DropdownMenuLabel>
           <DropdownMenuRadioGroup value={filterValue} onValueChange={onFilter}>
-            <DropdownMenuRadioItem className="" value="">
-              all
-            </DropdownMenuRadioItem>
-            <DropdownMenuRadioItem value="Camping Gear">
-              Camping Gear
-            </DropdownMenuRadioItem>
-            <DropdownMenuRadioItem value="a">A</DropdownMenuRadioItem>
+            <DropdownMenuRadioItem value="">All</DropdownMenuRadioItem>
+            {categories.map((category, index) => (
+              <DropdownMenuRadioItem key={index} value={category}>
+                {category}
+              </DropdownMenuRadioItem>
+            ))}
           </DropdownMenuRadioGroup>
         </DropdownMenuContent>
       </DropdownMenu>

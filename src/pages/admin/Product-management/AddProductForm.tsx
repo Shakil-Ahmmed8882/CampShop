@@ -3,7 +3,8 @@ import ProductForm from "./ProductForm";
 import { useCreateProductMutation } from "@/redux/features/product/productApi";
 
 const AddProductForm = (): JSX.Element => {
-  const [createProduct, {}] = useCreateProductMutation();
+  const [createProduct, {data}] = useCreateProductMutation();
+  console.log(data)
 
   const clickHandler = (formData:TProduct) => {
     // create product

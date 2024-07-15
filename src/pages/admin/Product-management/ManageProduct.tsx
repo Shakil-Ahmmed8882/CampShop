@@ -18,6 +18,7 @@ import Spinner from "@/components/shared/ui/Spinner";
 import { TProduct } from "./type";
 import ConfirmDialog from "@/components/shared/dialog/ConfirmDialog";
 import { Button } from "@/components/ui/button";
+import UpdateProduct from "./UpdateProduct";
 
 type Product = {
   id: string;
@@ -56,6 +57,9 @@ const ProductList = (): JSX.Element => {
     console.log("NO");
   };
 
+
+  console.log(data?.data)
+
   return (
     <Container>
       <div className="flex items-center justify-between mb-6 max-w-5xl mx-auto">
@@ -88,7 +92,7 @@ const ProductList = (): JSX.Element => {
                   >
                     <TableCell>
                       <img
-                        src={productImg}
+                        src={product?.images[0]}
                         alt={product.name}
                         className="size-12 mt-5 object-cover"
                       />
@@ -98,9 +102,7 @@ const ProductList = (): JSX.Element => {
                     <TableCell>{product.category}</TableCell>
                     <TableCell>
                       <div className="flex space-x-3">
-                        <button className="text-blue-600 hover:underline ">
-                          <EditIcon />
-                        </button>
+                        <UpdateProduct id={product?._id}/>
                         <Button onClick={()=> setProductId(product?._id)} className="bg-transparent hover:bg-[#0000003d]">
                         <ConfirmDialog handleDelete={handleDeleteProduct} />
                         </Button>

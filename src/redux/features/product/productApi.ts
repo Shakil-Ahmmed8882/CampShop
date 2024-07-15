@@ -1,3 +1,4 @@
+import { TProduct } from "@/components/pages/products/type";
 import { baseApi } from "../../api/baseApi";
 
 const productApi = baseApi.injectEndpoints({
@@ -27,11 +28,17 @@ const productApi = baseApi.injectEndpoints({
       invalidatesTags: ["product"],
     }),
     updateProduct: builder.mutation({
-      query: ({ id, ...updatedProduct }) => ({
-        url: `/products/${id}`,
-        method: "PUT",
-        body: updatedProduct,
-      }),
+      query: (payload) => {
+
+        const {id,data} = payload
+
+        return {
+          url: `/products/${id}`,
+          method: "POST",
+          body: data,
+
+        }
+      },
       invalidatesTags: ["product"],
     }),
     deleteProduct: builder.mutation({

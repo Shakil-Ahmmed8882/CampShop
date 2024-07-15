@@ -35,7 +35,7 @@ const Products = (): JSX.Element => {
   }
   if (maxPrice) {
     query.maxPrice = maxPrice;
-  }
+  } 
   
   const { data } = useGetAllProductsQuery(query);
 

@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
-import product from "@/assets/images/productts/shoe1.png";
+import {  useEffect } from "react";
 import BlurBall from "@/components/shared/visuals/BlurBall";
 import CustomButton from "@/components/ui/CustomButton";
-import CustomSpinner from "@/components/ui/CustomSpinner";
+
 import {
   useDeleteCartMutation,
   useGetAllCartsQuery,
@@ -141,15 +140,17 @@ const UpdateQuantity = ({ cart, refetch }) => {
   const [updateQuantity, { data: updateData, isSuccess, isError }] =
     useUpdateCartMutation();
 
-  const handleUpdateProductQuantity = async (isIncrease, productId) => {
+  const handleUpdateProductQuantity = async (isIncrease:boolean, productId:string) => {
     const updateProduct = {
       userId: "668d753fecf871f4e7c5f0b8",
       productId,
       isIncrease,
     };
 
-    await updateQuantity(updateProduct);
+    console.log(productId)
 
+    await updateQuantity(updateProduct);
+    
     if (isError) {
       ShowToast(
         "Failed!",
@@ -157,12 +158,12 @@ const UpdateQuantity = ({ cart, refetch }) => {
       );
       return;
     }
-
+    
     if (updateData?.data?.isOutOfStock) {
       ShowToast("Failed!", `Oops! This product is out of stock.`);
       return;
     }
-
+    
     if (isSuccess) {
       ShowToast("Success!", `Product quantity updated successfully.`);
       refetch();

@@ -62,15 +62,13 @@ const ProductForm = ({
 
 
     // Collecting all date from input ( file & data)
-    const {image, ...restData} = formData
-    const productData = {
-        ...restData
-    }
+    const {image, ...restProductData} = formData
+    
     const data = new FormData();
     data.append(
       "data",
       JSON.stringify({
-        ...productData
+        ...restProductData
       })
     );
 
@@ -79,7 +77,7 @@ const ProductForm = ({
     }
 
     clickHandler(data)
-
+    
 
   };
 
