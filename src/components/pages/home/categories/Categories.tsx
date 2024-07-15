@@ -9,18 +9,6 @@ const categories = [
   { id: 1, name: "Tents", image: product },
   { id: 2, name: "Backpacks", image: product },
   { id: 3, name: "Cooking Gear", image: product },
-  { id: 3, name: "Cooking Gear", image: product },
-  { id: 3, name: "Cooking Gear", image: product },
-  { id: 3, name: "Cooking Gear", image: product },
-  { id: 3, name: "Cooking Gear", image: product },
-  { id: 3, name: "Cooking Gear", image: product },
-  { id: 3, name: "Cooking Gear", image: product },
-  { id: 3, name: "Cooking Gear", image: product },
-  { id: 3, name: "Cooking Gear", image: product },
-  { id: 3, name: "Cooking Gear", image: product },
-  { id: 3, name: "Cooking Gear", image: product },
-  { id: 3, name: "Cooking Gear", image: product },
-  { id: 3, name: "Cooking Gear", image: product },
   // Add more categories as needed
 ];
 

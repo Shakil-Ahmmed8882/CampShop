@@ -1,3 +1,5 @@
+import { ClearOutlined } from "@ant-design/icons";
+
 export const CheckCircle = ({ className }: { className?: string }) => {
   return (
     <svg
@@ -98,7 +100,7 @@ export const EditIcon = () => {
 };
 
 // Delete icons
-export const DeleteIcon = ({handleDelete}:{handleDelete?: () => void}) => {
+export const DeleteIcon = ({ handleDelete }: { handleDelete?: () => void }) => {
   return (
     <button
       onClick={handleDelete}
@@ -122,4 +124,9 @@ export const DeleteIcon = ({handleDelete}:{handleDelete?: () => void}) => {
       </svg>
     </button>
   );
+};
+
+// clear
+export const ClearIcons = ({clickHandler}:{clickHandler:()=> void}) => {
+  return <ClearOutlined onClick={clickHandler} title="clear" className="text-[20px] text-[#818181] smooth-transition hover:text-white cursor-pointer " />;
 };

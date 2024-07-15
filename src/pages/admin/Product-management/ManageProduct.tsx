@@ -1,6 +1,6 @@
 import productImg from "@/assets/images/productts/t-shirt.png";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -12,6 +12,12 @@ import {
 import BlurBall from "@/components/shared/visuals/BlurBall";
 import Container from "@/components/shared/Container";
 import { DeleteIcon, EditIcon } from "@/assets/icons/Icons";
+import AddProductForm from "./AddProductForm";
+import { useDeleteProductMutation, useGetAllProductsQuery } from "@/redux/features/product/productApi";
+import Spinner from "@/components/shared/ui/Spinner";
+import { TProduct } from "./type";
+import ConfirmDialog from "@/components/shared/dialog/ConfirmDialog";
+import { Button } from "@/components/ui/button";
 
 type Product = {
   id: string;
@@ -29,79 +35,91 @@ const products: Product[] = [
     price: 29.99,
     category: "Category 1",
   },
-  {
-    id: "2",
-    image: "path_to_image_2.jpg",
-    name: "Product 2",
-    price: 39.99,
-    category: "Category 2",
-  },
-  // Add more products as needed
 ];
 
 const ProductList = (): JSX.Element => {
+  const { data, isLoading } = useGetAllProductsQuery(undefined);
+  const [ deleteProduct, {data:deletedData} ] = useDeleteProductMutation()
   const [productData, setProductData] = useState<Product[]>([]);
+  const [productId, setProductId] = useState("");
+  
 
   useEffect(() => {
     // Simulate fetching data from an API
     setProductData(products);
   }, []);
 
+  const handleDeleteProduct = (isDelete: boolean) => {
+    if (isDelete) {
+    deleteProduct(productId) 
+    }
+    console.log("NO");
+  };
+
   return (
-      <Container>
-
-<div className="flex items-center justify-between mb-6 max-w-5xl mx-auto">
-        <h1 className="text-2xl font-bold">Product List</h1>
-        <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
-          Add New Product
-        </button>
+    <Container>
+      <div className="flex items-center justify-between mb-6 max-w-5xl mx-auto">
+        <h1 className="text-2xl font-bold text-white">Product List</h1>
+        <AddProductForm />
       </div>
-    <div className="rounded-md bg-[#141510] max-w-5xl mx-auto">
-      <BlurBall/>
-      <Table className="space-y-3">
-        <TableHeader className="hover:!bg-transparent">
-          <TableRow>
-            <TableHead>Image</TableHead>
-            <TableHead>Name</TableHead>
-            <TableHead>Price</TableHead>
-            <TableHead>Category</TableHead>
-            <TableHead>Actions</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody className="">
-          {productData.length > 0 ? (
-            productData.map((product) => (
-              <TableRow key={product.id} className="!bg-[#2020206e] !py-8 text-[#c4c3c3]">
-                <TableCell>
-                  <img
-                    src={productImg}
-                    alt={product.name}
-                    className="size-12 mt-5 object-cover"
-                  />
-                </TableCell>
-                <TableCell>{product.name}</TableCell>
-                <TableCell>${product.price.toFixed(2)}</TableCell>
-                <TableCell>{product.category}</TableCell>
-                <TableCell>
-                  <div className="flex space-x-3">
-                    <button className="text-blue-600 hover:underline "><EditIcon/></button>
-                    <DeleteIcon/>
-                  </div>
-                </TableCell>
-              </TableRow>
-            ))
-          ) : (
+      <div className="rounded-md bg-[#141510] max-w-5xl mx-auto">
+        <BlurBall />
+        <Table className="space-y-3">
+          <TableHeader className="hover:!bg-transparent">
             <TableRow>
-              <TableCell colSpan={5} className="h-24 text-center">
-                No results.
-              </TableCell>
+              <TableHead>Image</TableHead>
+              <TableHead>Name</TableHead>
+              <TableHead>Price</TableHead>
+              <TableHead>Category</TableHead>
+              <TableHead>Actions</TableHead>
             </TableRow>
-          )}
-        </TableBody>
-      </Table>
+          </TableHeader>
 
-    </div>
-      </Container>
+          {/* Product table */}
+          {isLoading ? (
+            <Spinner />
+          ) : (
+            <TableBody className="">
+              {productData.length > 0 ? (
+                data?.data?.map((product: TProduct) => (
+                  <TableRow
+                    key={product?._id}
+                    className="!bg-[#2020206e] !py-8 text-[#c4c3c3]"
+                  >
+                    <TableCell>
+                      <img
+                        src={productImg}
+                        alt={product.name}
+                        className="size-12 mt-5 object-cover"
+                      />
+                    </TableCell>
+                    <TableCell>{product.name}</TableCell>
+                    <TableCell>${product.price.toFixed(2)}</TableCell>
+                    <TableCell>{product.category}</TableCell>
+                    <TableCell>
+                      <div className="flex space-x-3">
+                        <button className="text-blue-600 hover:underline ">
+                          <EditIcon />
+                        </button>
+                        <Button onClick={()=> setProductId(product?._id)} className="bg-transparent hover:bg-[#0000003d]">
+                        <ConfirmDialog handleDelete={handleDeleteProduct} />
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={5} className="h-24 text-center">
+                    No results.
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          )}
+        </Table>
+      </div>
+    </Container>
   );
 };
 

@@ -1,10 +1,12 @@
 
+import Container from "@/components/shared/Container";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
     <footer className="bg-[black] text-white py-20">
-      <div className="container mx-auto px-4">
+     <Container>
+     <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-2 lg:col-span-1 space-y-3">
             <h3 className="text-lg font-bold mb-4">Campers Shop</h3>
@@ -31,10 +33,11 @@ const Footer = () => {
             </ul>
           </div>
         </div>
-        <div className="border-t border-gray-700 mt-8 pt-4 text-center">
+        <div className="border-t border-gray-700 mt-8 pt-4 md:text-center">
           <p className="text-gray-400 mt-8">&copy; 2024 Campers Shop. All rights reserved.</p>
         </div>
       </div>
+     </Container>
     </footer>
   );
 };

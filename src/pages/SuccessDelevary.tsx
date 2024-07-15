@@ -2,9 +2,11 @@ import BlurBall from "@/components/shared/visuals/BlurBall";
 import { Button } from "@/components/ui/button";
 import Description from "@/components/ui/Description";
 import { useAppSelector } from "@/redux/hooks";
+import {  useNavigate } from "react-router-dom";
 
 const SuccessDelevary = (): JSX.Element => {
 
+  const goTo = useNavigate()
   const {name, address,email,phone,totalPrice} = useAppSelector(state => state.checkout)
 
 
@@ -66,11 +68,12 @@ const SuccessDelevary = (): JSX.Element => {
               </div>
             </div>
             <div className="flex pt-10 pb-4 gap-8">
-              <Button  className="!text-primaryColor rounded-full flex-1 !bg-[#476b2b60]">
+              
+              <Button onClick={()=> goTo('/')}  className="!text-primaryColor rounded-full flex-1 !bg-[#476b2b60]">
                 Back to home
               </Button>
               
-              <Button variant={"outline"} className="!text-primaryColor rounded-full flex-1 !bg-[#476b2b60]">
+          <Button  onClick={()=> goTo('/products')} variant={"outline"} className="!text-primaryColor rounded-full flex-1 !bg-[#476b2b60]">
               Continue Shooping
               </Button>
               

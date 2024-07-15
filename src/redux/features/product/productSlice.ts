@@ -37,10 +37,10 @@ const productSlice = createSlice({
       state.isClear = false;
     },
     clearFilters: (state) => {
-      state.isClear = true;
       state.category = "";
       state.search = "";
       state.minPrice = "";
+      state.isClear = true
     },
   },
 });

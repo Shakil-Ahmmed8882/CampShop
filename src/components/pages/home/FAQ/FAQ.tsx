@@ -6,29 +6,36 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import Title from "@/components/ui/Title";
 
 const faqs = [
   {
+    id:1,
     question: "What is the return policy?",
     answer: "You can return any item within 30 days of purchase.",
   },
   {
+    id:2,
     question: "Do you offer international shipping?",
     answer: "Yes, we ship to most countries worldwide.",
   },
   {
+    id:3,
     question: "What is the return policy?",
     answer: "You can return any item within 30 days of purchase.",
   },
   {
+    id:4,
     question: "Do you offer international shipping?",
     answer: "Yes, we ship to most countries worldwide.",
   },
   {
+    id:5,
     question: "What is the return policy?",
     answer: "You can return any item within 30 days of purchase.",
   },
   {
+    id:6,
     question: "Do you offer international shipping?",
     answer: "Yes, we ship to most countries worldwide.",
   },
@@ -37,14 +44,19 @@ const faqs = [
 const FAQ = () => {
   return (
     <section className="py-12 relative ">
-      <BlurBall/>
-      <Container>
-        <h2 className="text-3xl text-[#ececec] font-bold mb-16 text-center ">
-          FAQ
-        </h2>
-        <Accordion type="single" collapsible className="grid gap-6 sm:px-8 lg:grid-cols-2">
+      <BlurBall />
+      <Container className="px-2 sm:px-3 lg:px-8">
+        <Title className="md:text-center pb-10 pl-6">
+           FA
+          <span className="text-gradient">Q</span>
+        </Title>
+        <Accordion
+          type="single"
+          collapsible
+          className="grid gap-6  lg:grid-cols-2"
+        >
           {faqs.map((faq, index) => (
-            <AccordionItem className=" border-none" value={`${index}`}>
+            <AccordionItem key={faq.id} className=" border-none" value={`${index}`}>
               <AccordionTrigger
                 className="text-[#9b9b9b] font-normal text-[15px] sm:text-[20px] leading-[31px] p-8 hover:text-[#bcbcbc] bg-[#141510b1]
               rounded-lg

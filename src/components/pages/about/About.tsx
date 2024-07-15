@@ -11,7 +11,7 @@ const About = (): JSX.Element => {
           <img
             className="h-screen w-full object-center object-cover bg-blend-screen"
             src={product}
-            alt="CMapShop Outdoors"
+            alt="CampShop Outdoors"
           />
 
           {/* overlay */}

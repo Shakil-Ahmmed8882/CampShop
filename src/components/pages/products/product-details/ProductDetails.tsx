@@ -1,5 +1,8 @@
 import product from "@/assets/images/productts/shoe1.png";
 import { ShowToast } from "@/components/shared/toast/SuccessToast";
+import NoDataSearcingPlaceholder from "@/components/shared/ui/NoDataSearcingPlaceholder";
+import Spinner from "@/components/shared/ui/Spinner";
+import BlurBall from "@/components/shared/visuals/BlurBall";
 import CustomButton from "@/components/ui/CustomButton";
 import CustomSpinner from "@/components/ui/CustomSpinner";
 import Description from "@/components/ui/Description";
@@ -13,11 +16,15 @@ const ProductDetails = (): JSX.Element => {
 
   if (!id) throw new Error("....");
 
-  const { data } = useGetProductByIdQuery(id);
+  const { data, isLoading } = useGetProductByIdQuery(id);
 
   const { name, description, price, stock } = data?.data || {};
 
-  const [addToCart, { data: addedCart, isLoading }] = useCreateCartMutation();
+  const [addToCart, { data: addedCart }] = useCreateCartMutation();
+
+
+  // if load show spinner
+  if(isLoading) return  <Spinner/>
 
   // console.log(isLoading)
   // console.log(addedCart)
@@ -44,13 +51,19 @@ const ProductDetails = (): JSX.Element => {
     }
   };
 
+  
+
+  
   return (
     <>
+    <BlurBall/>
+      {
+        data && Object.keys(data.data).length > 0? 
       <div className="grid my-20 md:grid-cols-2 gap-6 lg:gap-12 items-start max-w-6xl px-4 mx-auto py-6">
         <div className="grid gap-4 md:gap-8">
           <div className="grid gap-4">
             <img
-              src={product}
+              src={data?.data?.images[0]}
               alt="Product Image"
               width={600}
               height={900}
@@ -107,8 +120,7 @@ const ProductDetails = (): JSX.Element => {
               </CustomButton>
             </div>
 
-            <div className="grid gap-2">
-              <h2 className="text-xl font-bold">Product Details</h2>
+            <div className="grid gap-2 " >
               <Description>
                 <span className="text-[#767874]">{description}</span>
                 <span className="text-[#767874]">
@@ -124,6 +136,9 @@ const ProductDetails = (): JSX.Element => {
           </div>
         </div>
       </div>
+      : 
+      <NoDataSearcingPlaceholder/>
+      } 
     </>
   );
 };

@@ -29,11 +29,11 @@ const Testimonials = () => {
     <section className="bg-[#07180884] py-20">
       <Container>
         <div className=" max-w-5xl mx-auto px-4 md:px-6">
-          <div className="mb-8 md:mb-12 text-center">
+          <div className="mb-8 md:mb-12 md:text-center">
             <Title className="!text-2xl sm:!text-3xl lg:!text-center">
               What Our Clients Say
             </Title>
-            <Description className=" pb-8 px-3">
+            <Description className=" pb-8 md:px-3">
               Hear from the people who love our products.
             </Description>
           </div>

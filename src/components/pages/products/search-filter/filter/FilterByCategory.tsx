@@ -22,9 +22,8 @@ const FilterByCategory = (): JSX.Element => {
     dispatch(setCategory({ category: filterValue }));
   }, [filterValue]);
 
-  if (filterValue === "clearFilters") {
-    dispatch(clearFilters());
-  }
+
+  
   return (
     <>
       <DropdownMenu>
@@ -45,9 +44,6 @@ const FilterByCategory = (): JSX.Element => {
               Camping Gear
             </DropdownMenuRadioItem>
             <DropdownMenuRadioItem value="a">A</DropdownMenuRadioItem>
-            <DropdownMenuRadioItem value="clearFilters">
-              Clear filter
-            </DropdownMenuRadioItem>
           </DropdownMenuRadioGroup>
         </DropdownMenuContent>
       </DropdownMenu>

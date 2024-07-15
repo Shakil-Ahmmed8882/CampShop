@@ -11,7 +11,7 @@ import SuccessDelevary from "@/pages/SuccessDelevary";
 export const generalPaths = [
   {
     name: "Home",
-    path: "/shop",
+    path: "/",
     element: <Home />,
   },
   {

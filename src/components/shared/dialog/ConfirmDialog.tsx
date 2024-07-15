@@ -14,23 +14,22 @@ import {
 const ConfirmDialog = ({
   handleDelete,
 }: {
-  handleDelete: (param1?:boolean) => void;
+  handleDelete: (param1?:boolean) => void | undefined;
 }): JSX.Element => {
   return (
     <AlertDialog>
       <AlertDialogTrigger>
-        <DeleteIcon handleDelete={handleDelete} />
+        <DeleteIcon handleDelete={()=>handleDelete(false)} />
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-          <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
+          <AlertDialogTitle className="title-color pb-3">Are you absolutely sure?</AlertDialogTitle>
+          <AlertDialogDescription className="!text-[#c9c9c9]">
+            This action cannot be undone. This will permanently delete this product.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel onClick={() => handleDelete(false)}>
+          <AlertDialogCancel className="title-color" onClick={() => handleDelete(false)}>
             Cancel
           </AlertDialogCancel>
           <AlertDialogAction

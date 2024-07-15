@@ -21,7 +21,7 @@ const featuredProducts = [
     price: "$179.99",
   },
   {
-    id: 2,
+    id: 3,
     name: "Deluxe Backpack",
     image:
       "https://images.pexels.com/photos/158648/girl-coat-old-coat-brown-coat-158648.jpeg?auto=compress&cs=tinysrgb&w=600",
@@ -36,7 +36,7 @@ const FeaturedProducts = () => {
         <div className="">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16 grid-rows-2">
             {featuredProducts.map((product) => (
-              <div className={`${product?.className}`}>
+              <div key={product?.id} className={`${product?.className}`}>
                 {product.heading && (
                   <>
                     <Title className="!text-2xl sm:!text-2xl px-3 ">
