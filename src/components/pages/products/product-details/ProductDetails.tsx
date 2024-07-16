@@ -1,4 +1,4 @@
-import product from "@/assets/images/productts/shoe1.png";
+
 import { ShowToast } from "@/components/shared/toast/SuccessToast";
 import NoDataSearcingPlaceholder from "@/components/shared/ui/NoDataSearcingPlaceholder";
 import Spinner from "@/components/shared/ui/Spinner";
@@ -20,7 +20,7 @@ const ProductDetails = (): JSX.Element => {
 
   const { name,category,images, description, price, stock } = data?.data || {};
 
-  const [addToCart, { data: addedCart }] = useCreateCartMutation();
+  const [addToCart, { error }] = useCreateCartMutation();
 
 
   // if load show spinner
@@ -46,8 +46,10 @@ const ProductDetails = (): JSX.Element => {
         ShowToast("Added: Enjoy!", "Product is added to your cart", true);
       }
       
-    } catch (error) {
-      ShowToast("Failed!", `${error?.data?.message}`);
+    } catch (er) {
+      if(error){
+        ShowToast("Failed!", `Something went wrong`,false);
+      }
     }
   };
 

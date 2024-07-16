@@ -18,6 +18,8 @@ import { setFormData } from "@/redux/features/checkout/checkoutSlice";
 import { useNavigate } from "react-router-dom";
 import Spinner from "@/components/shared/ui/Spinner";
 import NoDataSearcingPlaceholder from "@/components/shared/ui/NoDataSearcingPlaceholder";
+import { TUserCart } from "../products/type";
+import { CartRefetchType } from "./cart.type";
 
 const Cart = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -72,7 +74,7 @@ const Cart = (): JSX.Element => {
             </div>
             <div className="grid gap-6 md:grid-cols-[1fr_300px] ">
               <div className="grid gap-6">
-                {carts.map((cart) => (
+                {carts.map((cart: TUserCart) => (
                   <div
                     key={cart?.productId}
                     className="rounded-lg  lg:h-40 bg-[#0f0f0bc0] text-card-foreground shadow-sm"
@@ -137,7 +139,13 @@ const Cart = (): JSX.Element => {
 
 export default Cart;
 
-const UpdateQuantity = ({ cart, refetch }) => {
+const UpdateQuantity = ({
+  cart,
+  refetch,
+}: {
+  cart: TUserCart;
+  refetch: CartRefetchType;
+}) => {
   const [updateQuantity, { data: updateData, isSuccess, isError }] =
     useUpdateCartMutation();
 
@@ -224,8 +232,11 @@ const UpdateQuantity = ({ cart, refetch }) => {
     </div>
   );
 };
-
-const DeleteIcon = ({ cart, refetch }) => {
+type UpdateQuantityProps = {
+  cart: TUserCart;
+  refetch: () => void;
+};
+const DeleteIcon = ({ cart, refetch }: UpdateQuantityProps) => {
   const [deleteCart] = useDeleteCartMutation();
   const { cartId, productId } = cart;
 

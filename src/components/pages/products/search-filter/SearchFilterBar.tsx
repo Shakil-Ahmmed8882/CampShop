@@ -12,7 +12,7 @@ import { ClearIcons } from "@/assets/icons/Icons";
 const SearchFilterBar = (): JSX.Element => {
   const dispatch = useDispatch();
   const [isSearch, setIsSearch] = useState(false)
-  const inputRef = useRef()
+  const inputRef = useRef<HTMLInputElement>(null)
 
   const handleClear = () => {
     dispatch(clearFilters())

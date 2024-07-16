@@ -3,7 +3,6 @@ import {
   NavigationMenuItem as BaseNavigationMenuItem,
   NavigationMenuTrigger,
   NavigationMenuContent,
-  NavigationMenuLink,
 } from "@/components/ui/navigation-menu";
 
 interface NavigationMenuItemProps {
@@ -13,7 +12,7 @@ interface NavigationMenuItemProps {
   children?: React.ReactNode;
 }
 
-const NavMenuItem: React.FC<NavigationMenuItemProps> = ({ triggerText, linkHref, linkText, children }) => {
+const NavMenuItem: React.FC<NavigationMenuItemProps> = ({ triggerText, children }) => {
   return (
     <BaseNavigationMenuItem>
       <NavigationMenuTrigger>{triggerText}</NavigationMenuTrigger>

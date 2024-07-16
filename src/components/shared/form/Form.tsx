@@ -13,11 +13,19 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { setFormData } from "@/redux/features/checkout/checkoutSlice";
 import { useAppDispatch } from "@/redux/hooks";
-import { useState } from "react";
+import { FormEvent, useState, ChangeEvent } from "react";
 
 type TForm = {
   isDisabled?: boolean;
   handleNavigation: () => void;
+  totalPrice: number;
+};
+
+type FormDataType = {
+  name: string;
+  email: string;
+  phone: string;
+  address: string;
   totalPrice: number;
 };
 
@@ -26,25 +34,25 @@ const Form = ({
   handleNavigation,
   totalPrice,
 }: TForm): JSX.Element => {
-  const disPatch = useAppDispatch();
-  const [formData, setFormDataOnState] = useState({
+  const dispatch = useAppDispatch();
+  const [formData, setFormDataOnState] = useState<FormDataType>({
     name: "",
     email: "",
     phone: "",
     address: "",
-    totalPrice:totalPrice
+    totalPrice: totalPrice,
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormDataOnState({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    disPatch(setFormData(formData));
+    dispatch(setFormData(formData));
     handleNavigation();
-    console.log(formData)
+    console.log(formData);
   };
 
   return (

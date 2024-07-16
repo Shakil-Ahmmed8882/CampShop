@@ -1,4 +1,4 @@
-import productImg from "@/assets/images/productts/t-shirt.png";
+
 
 import { useEffect, useState } from "react";
 import {
@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/table";
 import BlurBall from "@/components/shared/visuals/BlurBall";
 import Container from "@/components/shared/Container";
-import { DeleteIcon, EditIcon } from "@/assets/icons/Icons";
 import AddProductForm from "./AddProductForm";
 import { useDeleteProductMutation, useGetAllProductsQuery } from "@/redux/features/product/productApi";
 import Spinner from "@/components/shared/ui/Spinner";
@@ -53,6 +52,7 @@ const ProductList = (): JSX.Element => {
   const handleDeleteProduct = (isDelete: boolean) => {
     if (isDelete) {
     deleteProduct(productId) 
+    console.log(deletedData)
     }
     console.log("NO");
   };

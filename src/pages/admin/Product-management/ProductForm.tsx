@@ -1,4 +1,11 @@
-import { useState, ChangeEvent, FormEvent, useEffect } from "react";
+import {
+  useState,
+  ChangeEvent,
+  FormEvent,
+  useEffect,
+  SetStateAction,
+  Dispatch,
+} from "react";
 import { Button } from "@/components/ui/button";
 import CustomButton from "@/components/ui/CustomButton";
 import {
@@ -16,12 +23,12 @@ import { TProduct } from "@/components/pages/products/type";
 
 type TForm = {
   isDisabled?: boolean;
-  clickHandler: (formData: TProduct) => void;
+  clickHandler: (formData: any) => void;
   label: string;
   title: string;
   existingProduc?: TProduct;
-  isOpen:boolean,
-  onOpenChange:()=> void
+  isOpen?: boolean;
+  onOpenChange?: Dispatch<SetStateAction<boolean>>;
 };
 
 const ProductForm = ({
@@ -31,7 +38,7 @@ const ProductForm = ({
   title,
   existingProduc,
   isOpen,
-  onOpenChange
+  onOpenChange,
 }: TForm): JSX.Element => {
   const { name, description, price, category, stock } = existingProduc || {};
 
@@ -41,10 +48,12 @@ const ProductForm = ({
     description: description || "",
     stock: stock ? stock.toString() : "",
     price: price ? price.toString() : "",
-    image: null,
+    image: null as File | null,
     category: category || "",
   });
 
+
+  
   useEffect(() => {
     if (existingProduc) {
       setFormDataOnState({
@@ -52,14 +61,17 @@ const ProductForm = ({
         description: existingProduc.description || "",
         stock: existingProduc.stock ? existingProduc.stock.toString() : "",
         price: existingProduc.price ? existingProduc.price.toString() : "",
-        image: null,
+        image: null as File | null,
         category: existingProduc.category || "",
       });
     }
   }, [existingProduc]);
 
+
   // Handle on-change input
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value, files } = e.target as HTMLInputElement;
     if (name === "image" && files) {
       setFormDataOnState({ ...formData, image: files[0] });
@@ -71,23 +83,24 @@ const ProductForm = ({
   // Handle submit
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    clickHandler(formData);
 
-    // Collecting all data from input (file & data)
-    const { image, ...restProductData } = formData;
+    // // Collecting all data from input (file & data)
+    // const { image, ...restProductData } = formData;
 
-    const data = new FormData();
-    data.append(
-      "data",
-      JSON.stringify({
-        ...restProductData,
-      })
-    );
+    // const data = new FormData();
+    // data.append(
+    //   "data",
+    //   JSON.stringify({
+    //     ...restProductData,
+    //   })
+    // );
 
-    if (image) {
-      data.append("image", image);
-    }
+    // if (image) {
+    //   data.append("image", image);
+    // }
 
-    clickHandler(data);
+    
   };
 
   return (
@@ -97,7 +110,9 @@ const ProductForm = ({
       </DialogTrigger>
       <DialogContent className="h-[90vh] !overflow-auto">
         <DialogHeader>
-          <DialogTitle className="pb-8 title-color text-2xl">{title}</DialogTitle>
+          <DialogTitle className="pb-8 title-color text-2xl">
+            {title}
+          </DialogTitle>
           <DialogDescription>
             <form onSubmit={(e) => handleSubmit(e)} className="checkout-form">
               <div className="form-group">

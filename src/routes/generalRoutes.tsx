@@ -41,12 +41,12 @@ export const generalPaths = [
   },
   //-----------------
   {
-   
+   name:'',
     path: "products/:id",
     element: <ProductDetails />,
   },
   {
-   
+    name:'',
     path: "success",
     element: <SuccessDelevary />,
   },

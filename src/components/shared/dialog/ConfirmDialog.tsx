@@ -11,15 +11,25 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
+type HandleDeleteFunction = (isConfirm: boolean) => void;
+
 const ConfirmDialog = ({
   handleDelete,
 }: {
-  handleDelete: (param1?:boolean) => void | undefined;
+  handleDelete: HandleDeleteFunction;
 }): JSX.Element => {
+  const handleCancel = () => {
+    handleDelete(false);
+  };
+
+  const handleConfirm = () => {
+    handleDelete(true);
+  };
+
   return (
     <AlertDialog>
       <AlertDialogTrigger>
-        <DeleteIcon handleDelete={()=>handleDelete(false)} />
+        <DeleteIcon handleDelete={handleCancel} />
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
@@ -29,12 +39,12 @@ const ConfirmDialog = ({
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel className="title-color" onClick={() => handleDelete(false)}>
+          <AlertDialogCancel className="title-color" onClick={handleCancel}>
             Cancel
           </AlertDialogCancel>
           <AlertDialogAction
             className={"!bg-[red]"}
-            onClick={() => handleDelete(true)}
+            onClick={handleConfirm}
           >
             Delete
           </AlertDialogAction>

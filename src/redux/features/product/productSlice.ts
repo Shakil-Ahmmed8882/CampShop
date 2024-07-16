@@ -6,6 +6,7 @@ type TProductState = {
   minPrice?: string;
   maxPrice?: string;
   category?: string;
+  sort?: string;
   isClear?: boolean;
 };
 
@@ -36,16 +37,20 @@ const productSlice = createSlice({
       state.maxPrice = maxPrice;
       state.isClear = false;
     },
+    setSort: (state, action: PayloadAction<string>) => {
+      state.sort = action.payload;
+    },
     clearFilters: (state) => {
       state.category = "";
       state.search = "";
       state.minPrice = "";
-      state.isClear = true
+      state.sort= "";
+      state.isClear = true;
     },
   },
 });
 
-export const { setSearch, setPrice, setCategory, clearFilters } =
+export const { setSearch, setPrice, setCategory, clearFilters, setSort } =
   productSlice.actions;
 
 export default productSlice.reducer;
@@ -54,4 +59,5 @@ export const selectSearch = (state: RootState) => state.product.search;
 export const selectCategory = (state: RootState) => state.product.category;
 export const selectMinPrice = (state: RootState) => state.product.minPrice;
 export const selectMaxPrice = (state: RootState) => state.product.maxPrice;
+export const selectSort = (state: RootState) => state.product.sort;
 export const selectClear = (state: RootState) => state.product.isClear;

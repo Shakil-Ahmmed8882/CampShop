@@ -1,18 +1,48 @@
 import { useState, useEffect } from "react";
 import { TProduct } from "@/components/pages/products/type";
 import ProductForm from "./ProductForm";
-import { useGetProductByIdQuery, useUpdateProductMutation } from "@/redux/features/product/productApi";
+import {
+  useGetProductByIdQuery,
+  useUpdateProductMutation,
+} from "@/redux/features/product/productApi";
 import { ShowToast } from "@/components/shared/toast/SuccessToast";
-import { Dialog } from "@/components/ui/dialog";
+import { uploadImage } from "@/utils/uploadImag";
 
 const UpdateProduct = ({ id }: { id: string }): JSX.Element => {
   const { data } = useGetProductByIdQuery(id);
-  const [updateProduct, { data: updatedData, isLoading, isSuccess }] = useUpdateProductMutation();
+  const [updateProduct, { data: updatedData, isLoading, isSuccess }] =
+    useUpdateProductMutation();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const clickHandler = async (data: TProduct) => {
+  const clickHandler = async (formData: TProduct) => {
     // Create product
-    await updateProduct({ id, data });
+
+
+    const {name, image, price,category,description,stock} = formData
+    
+
+    let imageURL = data?.data?.images[0];
+    let deleteURL;
+    if(image){
+      const {display_url,delete_url} = await uploadImage(image);
+      imageURL = display_url
+      deleteURL = delete_url
+    }
+
+
+    const updatingData = {
+      name,
+      category,
+      description,
+      images: [imageURL],
+      price,
+      stock,
+      delete_url: deleteURL
+    }
+
+    console.log(updatingData)
+
+    await updateProduct({ id, data: updatingData });
 
     // Check if the update is successful
     if (!isLoading && isSuccess && updatedData?.success) {
@@ -30,15 +60,14 @@ const UpdateProduct = ({ id }: { id: string }): JSX.Element => {
   }, [isLoading, isSuccess, updatedData]);
 
   return (
-    
-      <ProductForm
+    <ProductForm
       isOpen={isDialogOpen}
-       onOpenChange={setIsDialogOpen}
-        existingProduc={data?.data}
-        clickHandler={clickHandler}
-        label="Edit"
-        title="Update the product details"
-      />
+      onOpenChange={setIsDialogOpen}
+      existingProduc={data?.data}
+      clickHandler={clickHandler}
+      label="Edit"
+      title="Update the product details"
+    />
   );
 };
 

@@ -1,4 +1,4 @@
-import { TProduct } from "@/components/pages/products/type";
+
 import { baseApi } from "../../api/baseApi";
 
 const productApi = baseApi.injectEndpoints({
