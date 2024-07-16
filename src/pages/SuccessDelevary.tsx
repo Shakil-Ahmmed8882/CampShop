@@ -15,7 +15,7 @@ const SuccessDelevary = (): JSX.Element => {
       <div className="flex flex-col items-center py-20 justify-center min-h-screen ">
         <BlurBall />
         <div
-          className="rounded-lg  bg-gradient-to-tr text-wrap overflow-hidden from-[#1e3603f3] bg-blend-overlay  to-[#6e7e036c] text-card-foreground  w-full max-w-md p-6 md:p-8"
+          className="rounded-lg  bg-gradient-to-tr text-wrap overflow-hidden from-[#1e3603f3] bg-blend-overlay  to-[#6e7e036c] text-card-foreground  w-full max-w-md p-4"
           data-v0-t="card"
         >
 
@@ -35,7 +35,7 @@ const SuccessDelevary = (): JSX.Element => {
             className="shrink-0 bg-border h-[1px] w-full my-10"
           />
           <div className="grid gap-4">
-            <div className="grid gap-2 title-color">
+            <div className="grid gap-2 space-y-3 title-color">
               <h2 className="font-semibold pb-4">Order Details</h2>
               {/* name */}
               <div className="grid text-[#cacaca] grid-cols-2 items-center">
@@ -43,9 +43,9 @@ const SuccessDelevary = (): JSX.Element => {
                 <span>{name}</span>
               </div>
               {/* email */}
-              <div className="grid text-[#cacaca] grid-cols-2 items-center">
+              <div className="grid text-[#cacaca] grid-cols-2 items-center ">
                 <span >Email:</span>
-                <span>{email}</span>
+                <span>{email?.split('@')[0] + '@..'}</span>
               </div>
               {/* phone */}
               <div className="grid text-[#cacaca] grid-cols-2 items-center">

@@ -47,7 +47,7 @@ const Products = (): JSX.Element => {
         <SearchFilterBar />
       <Title className="text-center mt-20 md:mt-14">Products</Title>
       <Description className="text-center pb-2">Get your choice</Description>
-        <main className="grid grid-cols-1 gap-11   sm:grid-cols-2 lg:grid-cols-3 lg:p-1 md:pt-11 lg:pt-10">
+        <main className="grid grid-cols-1 gap-16 sm:gap-8 lg:gap-11   sm:grid-cols-2 lg:grid-cols-3  md:pt-11 lg:pt-10 lg:p-10">
           {/* {data?.data?.map((product: TProduct) => ( */}
           {
           

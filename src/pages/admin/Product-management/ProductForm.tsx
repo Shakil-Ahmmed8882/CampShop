@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, FormEvent } from "react";
+import { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import CustomButton from "@/components/ui/CustomButton";
 import {
@@ -19,6 +19,9 @@ type TForm = {
   clickHandler: (formData: TProduct) => void;
   label: string;
   title: string;
+  existingProduc?: TProduct;
+  isOpen:boolean,
+  onOpenChange:()=> void
 };
 
 const ProductForm = ({
@@ -26,27 +29,37 @@ const ProductForm = ({
   clickHandler,
   label,
   title,
+  existingProduc,
+  isOpen,
+  onOpenChange
 }: TForm): JSX.Element => {
+  const { name, description, price, category, stock } = existingProduc || {};
 
-
-
-
-  
-  
-  // handle form data
+  // Initialize state with existing product values if available
   const [formData, setFormDataOnState] = useState({
-    name: "",
-    description: "",
-    stock: "",
-    price: "",
+    name: name || "",
+    description: description || "",
+    stock: stock ? stock.toString() : "",
+    price: price ? price.toString() : "",
     image: null,
-    category: "",
+    category: category || "",
   });
 
-  // handle on-change input
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  useEffect(() => {
+    if (existingProduc) {
+      setFormDataOnState({
+        name: existingProduc.name || "",
+        description: existingProduc.description || "",
+        stock: existingProduc.stock ? existingProduc.stock.toString() : "",
+        price: existingProduc.price ? existingProduc.price.toString() : "",
+        image: null,
+        category: existingProduc.category || "",
+      });
+    }
+  }, [existingProduc]);
+
+  // Handle on-change input
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value, files } = e.target as HTMLInputElement;
     if (name === "image" && files) {
       setFormDataOnState({ ...formData, image: files[0] });
@@ -55,20 +68,18 @@ const ProductForm = ({
     }
   };
 
-
-  // handle submit   
+  // Handle submit
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    // Collecting all data from input (file & data)
+    const { image, ...restProductData } = formData;
 
-    // Collecting all date from input ( file & data)
-    const {image, ...restProductData} = formData
-    
     const data = new FormData();
     data.append(
       "data",
       JSON.stringify({
-        ...restProductData
+        ...restProductData,
       })
     );
 
@@ -76,23 +87,19 @@ const ProductForm = ({
       data.append("image", image);
     }
 
-    clickHandler(data)
-    
-
+    clickHandler(data);
   };
 
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogTrigger>
         <CustomButton isDisabled={isDisabled}>{label}</CustomButton>
       </DialogTrigger>
       <DialogContent className="h-[90vh] !overflow-auto">
         <DialogHeader>
-          <DialogTitle className="pb-8 title-color text-2xl">
-            {title}
-          </DialogTitle>
+          <DialogTitle className="pb-8 title-color text-2xl">{title}</DialogTitle>
           <DialogDescription>
-            <form onSubmit={(e)=> handleSubmit(e)} className="checkout-form">
+            <form onSubmit={(e) => handleSubmit(e)} className="checkout-form">
               <div className="form-group">
                 <Label htmlFor="name">Name</Label>
                 <Input
@@ -147,7 +154,7 @@ const ProductForm = ({
                   id="image"
                   name="image"
                   onChange={handleChange}
-                  required
+                  required={!existingProduc} // Only required if adding a new product
                 />
               </div>
 
@@ -168,7 +175,7 @@ const ProductForm = ({
                   type="submit"
                   className="bg-primaryLight outline-[0.5px] outline"
                 >
-                  Add
+                  {existingProduc ? "Update" : "Add"}
                 </Button>
               </div>
             </form>

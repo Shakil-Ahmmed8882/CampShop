@@ -18,7 +18,7 @@ const ProductDetails = (): JSX.Element => {
 
   const { data, isLoading } = useGetProductByIdQuery(id);
 
-  const { name, description, price, stock } = data?.data || {};
+  const { name,category,images, description, price, stock } = data?.data || {};
 
   const [addToCart, { data: addedCart }] = useCreateCartMutation();
 
@@ -63,27 +63,27 @@ const ProductDetails = (): JSX.Element => {
         <div className="grid gap-4 md:gap-8">
           <div className="grid gap-4">
             <img
-              src={data?.data?.images[0]}
+              src={images[0]}
               alt="Product Image"
               width={600}
               height={900}
               className="aspect-[2/3] object-cover h-full bg-[#0e0c0c81] w-full rounded-lg overflow-hidden"
             />
 
-            <div className="hidden md:flex gap-4 items-start">
-              {[1, 2, 3, 4].map((img) => (
+            <div className="hidden md:flex gap-11 items-start mt-8">
+              {[1, 2, 3].map((img) => (
                 <button
                   key={img}
                   className="bg-primaryLight pb-5 rounded-lg overflow-hidden transition-colors"
                 >
                   <img
-                    src={product}
+                    src={images[0]}
                     alt="Preview thumbnail"
                     width={100}
                     height={100}
                     className=" object-cover"
                   />
-                  <span className="sr-only">View Image 1</span>
+
                 </button>
               ))}
             </div>
@@ -91,10 +91,12 @@ const ProductDetails = (): JSX.Element => {
         </div>
         <div className="grid gap-4 md:gap-8">
           <div className="grid gap-2">
-            <Title>
+            <Title className="!mb-1">
               <> {name}</>
             </Title>
-            <Description>
+            <p className=" text-[#cdcdcdcb] mb-1">{category}</p>
+            <p className="text-[#cdcdcdcb]">Stock : <span className="text-primaryColor">{stock}</span></p>
+            <Description className="mt-1">
               60% combed ringspun cotton/40% polyester jersey tee.
             </Description>
             <Ratings />

@@ -14,8 +14,8 @@ const BestSellingProducts = () => {
   const { data } = useGetAllProductsQuery(undefined);
 
   return (
-    <Container py={"py-0"}>
       <section className=" py-20 min-h-screen relative bg-[#0000008e] z-20">
+    <Container py={"py-0"}>
         <BlurBall />
         <div className="mx-auto px-4">
           <Title className="!text-2xl sm:!text-3xl lg:!text-center md:pt-6 pb-11">
@@ -37,14 +37,14 @@ const BestSellingProducts = () => {
               </div>
             )}
           </div>
-          <div className="lg:text-center mt-8">
+          <div className="lg:text-center mt-16">
             <Link to="/products">
               <CustomButton>View More</CustomButton>
             </Link>
           </div>
         </div>
-      </section>
     </Container>
+      </section>
   );
 };
 

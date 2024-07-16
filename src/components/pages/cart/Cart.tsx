@@ -1,4 +1,4 @@
-import {  useEffect } from "react";
+import { useEffect } from "react";
 import BlurBall from "@/components/shared/visuals/BlurBall";
 import CustomButton from "@/components/ui/CustomButton";
 
@@ -41,7 +41,12 @@ const Cart = (): JSX.Element => {
   }
 
   if (!data || !data.data) {
-    return <div className=" mt-16"> <BlurBall /> <NoDataSearcingPlaceholder /></div>;
+    return (
+      <div className=" mt-16">
+        {" "}
+        <BlurBall /> <NoDataSearcingPlaceholder />
+      </div>
+    );
   }
 
   const { products: carts, totalPrice } = data.data;
@@ -50,10 +55,9 @@ const Cart = (): JSX.Element => {
     goTo("/success");
   };
 
-
   return (
     <>
-        <BlurBall />
+      <BlurBall />
       <section className="w-full py-12 pb-32 ">
         {carts?.length > 0 ? (
           <div className="container grid gap-6 md:gap-8 px-4 md:px-6">
@@ -61,6 +65,10 @@ const Cart = (): JSX.Element => {
               <h1 className="text-2xl font-bold tracking-tight title-color">
                 Shopping Cart
               </h1>
+              <Form
+                totalPrice={totalPrice}
+                handleNavigation={handleNavigation}
+              />
             </div>
             <div className="grid gap-6 md:grid-cols-[1fr_300px] ">
               <div className="grid gap-6">
@@ -91,18 +99,11 @@ const Cart = (): JSX.Element => {
 
                         <UpdateQuantity cart={cart} refetch={refetch} />
                       </div>
-                      <div className=" mt-10">
-                        <Form
-                          totalPrice={totalPrice}
-                          handleNavigation={handleNavigation}
-                          isDisabled={cart?.quantity <= 0}
-                        />
-                        <div className="flex items-center mt-2 justify-center gap-3">
-                          <p className="font-semibold text-[#c3c3c3]">
-                            ${cart?.price}
-                          </p>
-                          <DeleteIcon cart={cart} refetch={refetch} />
-                        </div>
+                      <div className="flex items-center mt-2 justify-center gap-3">
+                        <p className="font-semibold text-[#c3c3c3]">
+                          ${cart?.price}
+                        </p>
+                        <DeleteIcon cart={cart} refetch={refetch} />
                       </div>
                     </div>
                   </div>
@@ -140,17 +141,20 @@ const UpdateQuantity = ({ cart, refetch }) => {
   const [updateQuantity, { data: updateData, isSuccess, isError }] =
     useUpdateCartMutation();
 
-  const handleUpdateProductQuantity = async (isIncrease:boolean, productId:string) => {
+  const handleUpdateProductQuantity = async (
+    isIncrease: boolean,
+    productId: string
+  ) => {
     const updateProduct = {
       userId: "668d753fecf871f4e7c5f0b8",
       productId,
       isIncrease,
     };
 
-    console.log(productId)
+    console.log(productId);
 
     await updateQuantity(updateProduct);
-    
+
     if (isError) {
       ShowToast(
         "Failed!",
@@ -158,12 +162,12 @@ const UpdateQuantity = ({ cart, refetch }) => {
       );
       return;
     }
-    
+
     if (updateData?.data?.isOutOfStock) {
       ShowToast("Failed!", `Oops! This product is out of stock.`);
       return;
     }
-    
+
     if (isSuccess) {
       ShowToast("Success!", `Product quantity updated successfully.`);
       refetch();

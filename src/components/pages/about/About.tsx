@@ -78,8 +78,18 @@ const ContactUs = () => {
         </div>
       </div>
       <div className="mt-8">
+      <div className="mt-8">
         <h3 className="font-semibold">Find Us</h3>
-        <div className="mt-4 aspect-video overflow-hidden bg-[#18221431] rounded-lg" />
+        <div className="mt-4 aspect-video overflow-hidden bg-[#18221431] rounded-lg">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.8354345092927!2d144.9537353159042!3d-37.81627974202151!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad642af0f11fd81%3A0xf5776e1f83b9bc14!2s123%20Main%20Street%2C%20Anytown%20USA%2012345!5e0!3m2!1sen!2sbd!4v1605163445201!5m2!1sen!2sbd"
+            width="100%"
+            height="100%"
+            // allowFullScreen=""
+            loading="lazy"
+          ></iframe>
+        </div>
+      </div>
       </div>
     </div>
   );
