@@ -22,8 +22,8 @@ const SuccessDelevary = (): JSX.Element => {
           <div className="flex flex-col items-center justify-center gap-4">
           <ChekcCirleIcon/>
           
-            <h1 className="text-[25px] font-bold title-color pt-2">Order Placed Successfully!</h1>
-            <Description className="text-[18px] text-center my-2 mb-0" >
+            <h1 className=" text-[18px] sm:text-[25px] font-bold title-color pt-2">Order Placed Successfully!</h1>
+            <Description className="text-[14px] sm:text-[18px] text-center my-2 mb-0" >
             Thank you for your Cash on Delivery (COD) order. Your order is
             being processed and will be delivered soon.
             </Description>

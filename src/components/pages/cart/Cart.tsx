@@ -10,7 +10,6 @@ import {
 import OrderSummary from "./OrderSummary";
 import ConfirmDialog from "@/components/shared/dialog/ConfirmDialog";
 
-import { Badge } from "@/components/ui/badge";
 import { ShowToast } from "@/components/shared/toast/SuccessToast";
 import Form from "@/components/shared/form/Form";
 import { useAppDispatch } from "@/redux/hooks";
@@ -60,11 +59,11 @@ const Cart = (): JSX.Element => {
   return (
     <>
       <BlurBall />
-      <section className="w-full py-12 pb-32 ">
+      <section className="w-full py-12 pb-32 sm:px-8 ">
         {carts?.length > 0 ? (
           <div className="container grid gap-6 md:gap-8 px-4 md:px-6">
             <div className="flex items-center justify-between pt-14 pb-8">
-              <h1 className="text-2xl font-bold tracking-tight title-color">
+              <h1 className=" text-[13px] sm:text-2xl font-bold tracking-tight title-color">
                 Shopping Cart
               </h1>
               <Form
@@ -72,38 +71,44 @@ const Cart = (): JSX.Element => {
                 handleNavigation={handleNavigation}
               />
             </div>
-            <div className="grid gap-6 md:grid-cols-[1fr_300px] ">
+            <div className="grid gap-6  lg:grid-cols-[1fr_300px] ">
               <div className="grid gap-6">
                 {carts.map((cart: TUserCart) => (
                   <div
                     key={cart?.productId}
-                    className="rounded-lg  lg:h-40 bg-[#0f0f0bc0] text-card-foreground shadow-sm"
+                    className="rounded-lg   bg-[#0f0f0bc0] text-card-foreground shadow-sm"
                     data-v0-t="card"
                   >
-                    <div className="grid md:grid-cols-[120px_1fr_auto] gap-14 items-center">
+                    <div className="flex justify-between items-center gap-8">
+
                       <img
                         src={cart?.image}
                         alt="Product Image"
                         width={120}
                         height={120}
-                        className="rounded-lg object-cover p-6"
+                        className=" object-cover size-6 sm:size-10 md:size-14 !rounded-full"
                         style={{ aspectRatio: "120 / 120", objectFit: "cover" }}
                       />
-                      <div className="flex items-center justify-between gap-1">
-                        <h3 className="font-semibold title-color">
-                          {cart?.product}
+                      <div className="flex items-center justify-between gap-8 flex-1">
+
+                        <h3 className="hidden md:flex text-[12px] md:text-[15px] w-72 title-color">
+                          {cart?.product?.split(" ")[0]}
                         </h3>
 
-                        <Badge className="!bg-primaryLight !text-primaryColor">
-                          stock :{" "}
-                          <span className="title-color"> {cart?.stock}</span>
-                        </Badge>
-
+                          <span className="hidden sm:flex title-color gap-8">
+                          Stock
+                            <span className="!text-secondaryColor">
+                            {cart?.stock}
+                            </span>
+                            
+                          </span>
+                        
                         <UpdateQuantity cart={cart} refetch={refetch} />
                       </div>
-                      <div className="flex items-center mt-2 justify-center gap-3">
-                        <p className="font-semibold text-[#c3c3c3]">
-                          ${cart?.price}
+                      <div className="flex text-[10px] sm:text-[12px] md:text-[15px] items-center mt-2 justify-center gap-3">
+                        <p className="text-secondaryColor">
+                          <span className="title-color w-32">$ </span>
+                          {cart?.price}
                         </p>
                         <DeleteIcon cart={cart} refetch={refetch} />
                       </div>
@@ -112,10 +117,10 @@ const Cart = (): JSX.Element => {
                 ))}
               </div>
               <div
-                className="rounded-lg !bg-gradient-to-tr sticky top-0 max-h-screen overflow-y-auto from-[#509502ba]  to-[#a6bf0233] bg-blend-overlay text-card-foreground shadow-sm"
+                className="rounded-lg !bg-gradient-to-tr sticky top-0 max-h-screen overflow-y-auto from-[#509502ba]  to-[#a6bf0233] bg-blend-overlay text-card-foreground shadow-sm mt-11 md:mt-auto"
                 data-v0-t="card"
               >
-                <div className="flex flex-col space-y-1.5 p-6">
+                <div className="flex flex-col  space-y-1.5 p-6">
                   <h3 className="whitespace-nowrap title-color text-2xl font-semibold leading-none tracking-tight">
                     Order Summary
                   </h3>
@@ -183,7 +188,7 @@ const UpdateQuantity = ({
   };
 
   return (
-    <div className="flex items-center gap-5">
+    <div className="flex items-center sm:gap-8 justify-between sm:justify-center w-full">
       {/* decrease */}
       <CustomButton
         isDisabled={cart.quantity <= 0}
@@ -200,18 +205,18 @@ const UpdateQuantity = ({
           strokeWidth={2}
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="h-4 w-4"
+          className="h-2 sm:h-4 !p-0 !py-0 !bg-transparent sm:px-3 w-2 text-[11px]  md:text-xl"
         >
           <path d="M5 12h14" />
         </svg>
       </CustomButton>
-      <span className="title-color">{cart?.quantity}</span>
+      <span className="title-color !text-[12px] sm:text-xl">{cart?.quantity}</span>
 
       {/* Increase */}
       <CustomButton
         isDisabled={cart.stock == 0}
         clickHandler={() => handleUpdateProductQuantity(true, cart.productId)}
-        px="px-3"
+        px="p-0 py-0 !bg-transparent sm:px-3"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -223,7 +228,7 @@ const UpdateQuantity = ({
           strokeWidth={2}
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="h-4 w-4"
+          className="h-2 sm:h-4 w-2 text-[11px]  md:text-xl"
         >
           <path d="M5 12h14" />
           <path d="M12 5v14" />

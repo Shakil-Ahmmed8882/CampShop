@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import Container from '@/components/shared/Container';
 import Description from '@/components/ui/Description';
 import Title from '@/components/ui/Title';
@@ -56,7 +56,7 @@ const Categories = () => {
                   alt={category.name}
                   className=" size-28 lg:size-32 object-cover mx-auto mb-4"
                 />
-                <h3 className="text-primaryColor text-[11px] md:text-[15px]">
+                <h3 className="text-secondaryColor text-[11px] md:text-[15px]">
                   {category.name}
                 </h3>
               </div>

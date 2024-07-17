@@ -1,11 +1,16 @@
+
 import { Link } from "react-router-dom";
+import logoImg from '@/assets/brands/fire-logo.png'
 
 const Logo = (): JSX.Element => {
   return (
     <div className="logo">
-      <Link to="/" className="text-white font-bold text-[18px] md:text-2xl">
-        {/* <img src="/path/to/logo.png" alt="CampShop Logo" /> */}
-        Camp<span className="text-gradient">Shop</span>
+      <Link
+        to="/"
+        className="text-white flex items-center gap-1"
+      >
+        <img src={logoImg} className="size-9" alt="" />
+        <p className="hidden md:flex  font-semibold title-color text-[18px] md:text-[20px]">CampShop</p>
       </Link>
     </div>
   );
