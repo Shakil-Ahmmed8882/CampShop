@@ -78,6 +78,7 @@ body {
   font-family: "Poppins";
   font-weight: 400;
   font-style: normal;
+  min-width: 320px;
 }
 
 .body-gradient{

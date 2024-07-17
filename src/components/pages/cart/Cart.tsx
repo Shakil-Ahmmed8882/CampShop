@@ -38,7 +38,7 @@ const Cart = (): JSX.Element => {
   }, [data, dispatch]);
 
   if (isLoading) {
-    return <Spinner />;
+    return <div className="flex w-full justify-center"><Spinner /></div>;
   }
 
   if (!data || !data.data) {
@@ -59,7 +59,7 @@ const Cart = (): JSX.Element => {
   return (
     <>
       <BlurBall />
-      <section className="w-full py-12 pb-32 sm:px-8 ">
+      <section className="w-full  py-12 pb-32 sm:px-8 ">
         {carts?.length > 0 ? (
           <div className="container grid gap-6 md:gap-8 px-4 md:px-6">
             <div className="flex items-center justify-between pt-14 pb-8">
@@ -76,7 +76,7 @@ const Cart = (): JSX.Element => {
                 {carts.map((cart: TUserCart) => (
                   <div
                     key={cart?.productId}
-                    className="rounded-lg   bg-[#0f0f0bc0] text-card-foreground shadow-sm"
+                    className="rounded-lg  bg-[#0f0f0bc0] p-2 md:p-4"
                     data-v0-t="card"
                   >
                     <div className="flex justify-between items-center gap-8">
@@ -193,7 +193,7 @@ const UpdateQuantity = ({
       <CustomButton
         isDisabled={cart.quantity <= 0}
         clickHandler={() => handleUpdateProductQuantity(false, cart.productId)}
-        px="px-3"
+        px="px-4"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -214,9 +214,9 @@ const UpdateQuantity = ({
 
       {/* Increase */}
       <CustomButton
-        isDisabled={cart.stock == 0}
+        isDisabled={cart.quantity <= 0}
         clickHandler={() => handleUpdateProductQuantity(true, cart.productId)}
-        px="p-0 py-0 !bg-transparent sm:px-3"
+        px="px-4"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

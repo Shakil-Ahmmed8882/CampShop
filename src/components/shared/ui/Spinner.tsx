@@ -1,14 +1,14 @@
-import { RevolvingDot } from "react-loader-spinner";
+import { Oval} from "react-loader-spinner";
 
 const Spinner = (): JSX.Element => {
   return (
     <div className=" flex justify-center items-center h-[80vh] w-full">
-      <RevolvingDot
+      <Oval
         visible={true}
-        height="100%"
-        width="100%"
-        color="#9ADE66"
-        ariaLabel="revolving-dot-loading"
+        height="50"
+        width="50"
+        color="#4fa94d"
+        ariaLabel="oval-loading"
         wrapperStyle={{}}
         wrapperClass=""
       />

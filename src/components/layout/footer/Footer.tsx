@@ -25,7 +25,7 @@ const Footer = () => {
           </div>
           <div>
             <h3 className="text-lg font-bold mb-4">Follow Us</h3>
-            <ul className="flex space-x-4">
+            <ul className="md:flex md:space-x-4">
               <li><a href="#" className="text-gray-400 smooth-transition hover:text-primaryColor cursor-pointer">Facebook</a></li>
               <li><a href="#" className="text-gray-400 smooth-transition hover:text-primaryColor cursor-pointer">Twitter</a></li>
               <li><a href="#" className="text-gray-400 smooth-transition hover:text-primaryColor cursor-pointer">Instagram</a></li>
