@@ -1,4 +1,4 @@
-import productImg from "@/assets/images/productts/t-shirt.png";
+
 import Container from "@/components/shared/Container";
 import Description from "@/components/ui/Description";
 import Title from "@/components/ui/Title";

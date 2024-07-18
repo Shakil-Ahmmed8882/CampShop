@@ -164,8 +164,6 @@ const UpdateQuantity = ({
       isIncrease,
     };
 
-    console.log(productId);
-
     await updateQuantity(updateProduct);
 
     if (isError) {
@@ -186,6 +184,7 @@ const UpdateQuantity = ({
       refetch();
     }
   };
+
 
   return (
     <div className="flex items-center sm:gap-8 justify-between sm:justify-center w-full">
@@ -214,7 +213,7 @@ const UpdateQuantity = ({
 
       {/* Increase */}
       <CustomButton
-        isDisabled={cart.quantity <= 0}
+        isDisabled={cart.quantity >= cart?.stock}
         clickHandler={() => handleUpdateProductQuantity(true, cart.productId)}
         px="px-4"
       >
